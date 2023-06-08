@@ -2,9 +2,7 @@
 % Please edit documentation in R/directory_check.R
 \name{directory_check}
 \alias{directory_check}
-\title{Checking that current working directory has the sub-directories:
-\code{DATA_Iowa_activPAL}, \code{DATA_Pitt_activPAL}, and \code{DATA_WVU_activPAL},
-which contains all raw sleep diary and ActivPAL data.}
+\title{Checking current working directory}
 \usage{
 directory_check(path = ".")
 }
@@ -23,8 +21,11 @@ Checking that current working directory has the sub-directories:
 which contains all raw sleep diary and ActivPAL data.
 }
 \examples{
-directory_check()
-directory_check(path = ".")
-directory_check(path = "../") # error
+# directory_check() # works if current directory has sub-directories
+# directory_check(path = ".") # works if current directory has sub-directories
+# directory_check(path = "../") # error by moving out of current directory
 
+}
+\seealso{
+\code{getwd()}, \code{dir()}
 }
