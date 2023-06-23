@@ -6,8 +6,8 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of `pregnancy247` is to process the raw sleep diary and
-ActivPAL data for [The University of Iowa Pregnancy
+The goal of `pregnancy247` is to process the raw sleep diary,
+AcitvWATCH, and ActivPAL data for [The University of Iowa Pregnancy
 24/7](https://clinicaltrials.uihealthcare.org/studies/pregnancy-247)
 research study conducted by [Kara
 Whitaker](https://clas.uiowa.edu/hhp/people/kara-m-whitaker). This
