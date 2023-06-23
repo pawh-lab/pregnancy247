@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_sleep.R
 \name{read_sleep}
 \alias{read_sleep}
-\title{Import sleep diary data}
+\title{Import ActivWATCH and sleep diary data.}
 \usage{
 read_sleep(file, subject, trimester, ...)
 }
@@ -17,18 +17,19 @@ read_sleep(file, subject, trimester, ...)
 \item{...}{Any other parameters needed for \code{readr::read_csv()}.}
 }
 \value{
-A \code{data.sleep} object which only includes the raw sleep diary data
-for the \code{subject} of interest at the \code{trimester} of interest.
+A \code{data.sleep} object, which is a \code{data.frame} that only includes the
+raw sleep diary data for the \code{subject} of interest at the \code{trimester} of
+interest based on the temporarily created \code{id} variable.
 }
 \description{
-Importing the raw CSV (comma-separated values) sleep diary data based on the
-current working directory.
+Importing the raw CSV (comma-separated values) ActivWATCH and sleep diary
+data based on the current working directory.
 }
 \details{
 The \code{file} argument and any other \code{readr::read_csv} arguments are
-used to read in the CSV sleep diary data. After the data is imported, the
-\code{subject} and \code{trimester} arguments are used to create an \code{id} variable for
-subject and trimester of interest.
+used to read in the CSV ActivWATCH and sleep diary data. After the data is
+imported, the \code{subject} and \code{trimester} arguments are used to create an \code{id}
+variable for subject and trimester of interest.
 
 The Pregnancy 24/7 study includes a rewear
 protocol for subjects that had trouble with there ActivPAL device. Before
@@ -37,11 +38,16 @@ interest, the raw sleep diary data for the entire sleep needs to account for
 rewear protocol. As an example, suppose subject 0001-AB at the first
 trimester needed to have their data recorded again. For processing purposes,
 it was assummed if the rewear protocol was initiated then the original wear
-for the trimester is invalid. Thus, the data from the second wear period during
-the trimester is the data to use and the original data is not needed. Original
-wear is denoted with an "O" and rewear is denoted with a "R" after the
-initials for the subject.
+for the trimester is invalid. Thus, the data from the second wear period
+during the trimester is the data to use and the original data is not needed.
+Original wear is denoted with an "O" and rewear is denoted with a "R" after
+the initials for the subject.
+}
+\examples{
+# sleep <- read_sleep("./sleep.csv", "0001-AB", 3) # numeric trimester
+# sleep <- read_sleep("./sleep.csv", "0001-AB", "3") # character trimester
+
 }
 \seealso{
-\code{readr::read_csv()}
+\code{\link[readr:read_delim]{readr::read_csv()}}
 }

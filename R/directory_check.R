@@ -22,13 +22,16 @@
 directory_check <- function(path = ".") {
     base::setwd(path)
     dirs <- base::dir()
-    dirs_data <- c("DATA_Iowa_activPAL",  "DATA_Pitt_activPAL", "DATA_WVU_activPAL")
+    dirs_data <- c(
+        "DATA_Iowa_activPAL",
+        "DATA_Pitt_activPAL",
+        "DATA_WVU_activPAL"
+    )
     if (!all(dirs_data %in% dirs)) {
         stop(
             paste0(
-                "Current working direcotry does not contain the sub-directories:\n",
-                "\t", dirs_data[1], "\n\t", dirs_data[2], "\n\t", dirs_data[3], "\n",
-                "  which contains the raw sleep diary and ActivPal data.\n"
+                "Current directory does not contain the sub-directories:\n",
+                "\t", dirs_data[1], "\n\t", dirs_data[2], "\n\t", dirs_data[3]
             )
         )
     }
