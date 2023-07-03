@@ -1,3 +1,17 @@
+#' Screening the master sleep or nap data.
+#'
+#' Screening the master sleep or nap data imported with `read_msleep()` for
+#' outlier values based on the expertise of
+#' [Christopher E. Kline](https://www.education.pitt.edu/people/cek51).
+#'
+#' @param x A `msleep` object imported with `read_msleep`.
+#' @param nap Logical denoting if master nap data is to be screened for outlying
+#' values. Default is `FALSE`.
+#'
+#' @return A `msleep` object, which is a `data.frame` containing two additional
+#' variables `flag1` and `flag2`.
+#'
+#' @export check_msleep
 check_msleep <- function(x, nap = FALSE) {
   # Checking parmeter values ####
   if (!("msleep" %in% class(x))) {
@@ -261,7 +275,7 @@ check_msleep <- function(x, nap = FALSE) {
     start_time <- substr(x$Start_Time, 12, 19)
     hour <- as.numeric(substr(start_time, 1, 2))
     for (i in n) {
-      if (!is.na(hour[i]) && (hour[i] > 20 || hour < 10)) {
+      if (!is.na(hour[i]) && (hour[i] > 20 || hour[i] < 10)) {
         flag1[i] <- 1
         if (flag2[i] == "") {
           flag2[i] <- "Start time > 20:00:00 or < 10:00:00"
