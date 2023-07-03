@@ -7,8 +7,8 @@
 check_dir(path = ".")
 }
 \arguments{
-\item{path}{A character vector of full path names; the default corresponds to
-the working directory, \code{getwd()}. Also, \code{path} sets the working directory
+\item{path}{A character vector of full path names; the default corresponds
+to the working directory, \code{getwd()}. Also, \code{path} sets the working directory
 with \code{setwd(path)}.}
 }
 \value{
