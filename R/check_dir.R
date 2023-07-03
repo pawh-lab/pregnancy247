@@ -20,19 +20,19 @@
 #'
 #' @export check_dir
 check_dir <- function(path = ".") {
-    base::setwd(path)
-    dirs <- base::dir()
-    dirs_data <- c(
-        "DATA_Iowa_activPAL",
-        "DATA_Pitt_activPAL",
-        "DATA_WVU_activPAL"
+  setwd(path)
+  dirs <- dir()
+  dirs_data <- c(
+    "DATA_Iowa_activPAL",
+    "DATA_Pitt_activPAL",
+    "DATA_WVU_activPAL"
+  )
+  if (!all(dirs_data %in% dirs)) {
+    stop(
+      paste0(
+        "Current directory does not contain the sub-directories:\n",
+        "\t", dirs_data[1], "\n\t", dirs_data[2], "\n\t", dirs_data[3]
+      )
     )
-    if (!all(dirs_data %in% dirs)) {
-        stop(
-            paste0(
-                "Current directory does not contain the sub-directories:\n",
-                "\t", dirs_data[1], "\n\t", dirs_data[2], "\n\t", dirs_data[3]
-            )
-        )
-    }
+  }
 }
