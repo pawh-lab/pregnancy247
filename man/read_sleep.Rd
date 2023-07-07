@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_sleep.R
 \name{read_sleep}
 \alias{read_sleep}
-\title{Import ActivWATCH and sleep diary data.}
+\title{Import Actiwatch and sleep diary data.}
 \usage{
 read_sleep(file, subject, trimester, ...)
 }
@@ -12,40 +12,54 @@ read_sleep(file, subject, trimester, ...)
 
 \item{subject}{A character vector denoting the Pregnancy 24/7 subject.}
 
-\item{trimester}{A character vectoring denoting trimester of pregnancy.}
+\item{trimester}{A character or integer vector denoting trimester of
+pregnancy.}
 
-\item{...}{Any other parameters needed for \code{readr::read_csv()}.}
+\item{...}{Any other parameters needed for \code{\link[readr:read_delim]{readr::read_csv()}}.}
 }
 \value{
-A \code{data.sleep} object, which is a \code{data.frame} that only includes the
-raw sleep diary data for the \code{subject} of interest at the \code{trimester} of
-interest based on the temporarily created \code{id} variable.
+A \code{data.sleep} object is returned, which is a \code{data.frame} that only
+includes the raw Actiwatch and sleep diary data for the \code{subject} of interest
+during the \code{trimester} of interest based on the temporarily created
+\code{id} variable.
 }
 \description{
-Importing the raw CSV (comma-separated values) ActivWATCH and sleep diary
+Importing the raw CSV (comma-separated values) Actiwatch and sleep diary
 data based on the current working directory.
 }
 \details{
-The \code{file} argument and any other \code{readr::read_csv} arguments are
-used to read in the CSV ActivWATCH and sleep diary data. After the data is
+The \code{file} argument and any other \code{\link[readr:read_delim]{readr::read_csv()}} arguments are
+used to read in the CSV Actiwatch and sleep diary data. After the data is
 imported, the \code{subject} and \code{trimester} arguments are used to create an \code{id}
 variable for subject and trimester of interest.
 
-The Pregnancy 24/7 study includes a rewear
-protocol for subjects that had trouble with there ActivPAL device. Before
-selecting the sleep diary data for subject of interest at the trimester of
-interest, the raw sleep diary data for the entire sleep needs to account for
-rewear protocol. As an example, suppose subject 0001-AB at the first
-trimester needed to have their data recorded again. For processing purposes,
-it was assummed if the rewear protocol was initiated then the original wear
-for the trimester is invalid. Thus, the data from the second wear period
-during the trimester is the data to use and the original data is not needed.
-Original wear is denoted with an "O" and rewear is denoted with a "R" after
-the initials for the subject.
+The Pregnancy 24/7 study includes a rewear protocol for subjects that had
+trouble with there activPAL device. Before selecting the sleep diary data for
+subject of interest at the trimester of interest, the raw Actiwatch and sleep
+diary data for the entire samples needs to be examined for the rewear
+protocol. To better understand the rewear protocol, suppose subject 0001-AB
+during the first trimester needed to have their data recorded again. For
+processing purposes, it was assummed if the rewear protocol was initiated
+then the original wear for the trimester is invalid. Thus, the data from the
+second wear period during the trimester is the data to use and the original
+data is not needed. Original wear is denoted with an "O" and rewear is
+denoted with a "R" after the initials for the subject.
+
+This function does not require that the entire sample of the Pregnancy 24/7
+study to be included in the data set import with the \code{file} name. It does
+require that the subject and trimeseter of interest is listed in the data
+set.
 }
 \examples{
-# sleep <- read_sleep("./sleep.csv", "0001-AB", 3) # numeric trimester
-# sleep <- read_sleep("./sleep.csv", "0001-AB", "3") # character trimester
+\dontrun{
+# numeric trimester
+sleep <- read_sleep("./sleep.csv", "0001-AB", 3)
+}
+
+\dontrun{
+# character trimester
+sleep <- read_sleep("./sleep.csv", "0001-AB", "3")
+}
 
 }
 \seealso{
