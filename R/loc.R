@@ -1,4 +1,4 @@
-loc <- function(subject, trimester) {
+loc <- function(subject) {
   data_site <- substr(subject, 1, 1)
   if (data_site == "1") {
     data_loc <- paste0(

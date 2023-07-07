@@ -2,7 +2,7 @@ write_events <- function(x, subject, trimester, file = NULL, ...) {
 
   if (is.null(file)) {
     subject_id <- paste0(subject, trimester)
-    data_loc <- loc(subject = subject, trimester = trimester)
+    data_loc <- loc(subject = subject)
     readr::write_csv(
       x = x,
       file = paste0(data_loc, subject_id, "_eventfile.csv"),
@@ -23,7 +23,7 @@ write_1s_epoch <- function(x, subject, trimester, file = NULL, ...) {
 
   if (is.null(file)) {
     subject_id <- paste0(subject, trimester)
-    data_loc <- loc(subject = subject, trimester = trimester)
+    data_loc <- loc(subject = subject)
     readr::write_csv(
       x = x,
       file = paste0(data_loc, subject_id, "_1secepoch.csv"),
@@ -44,7 +44,7 @@ write_daily <- function(x, subject, trimester, file = NULL, ...) {
 
   if (is.null(file)) {
     subject_id <- paste0(subject, trimester)
-    data_loc <- loc(subject = subject, trimester = trimester)
+    data_loc <- loc(subject = subject)
     readr::write_csv(
       x = x,
       file = paste0(data_loc, subject_id, "_daily_values.csv"),
@@ -65,7 +65,7 @@ write_avgs <- function(x, subject, trimester, file = NULL, ...) {
 
   if (is.null(file)) {
     subject_id <- paste0(subject, trimester)
-    data_loc <- loc(subject = subject, trimester = trimester)
+    data_loc <- loc(subject = subject)
     readr::write_csv(
       x = x,
       file = paste0(data_loc, subject_id, "_weekly_avgs.csv"),

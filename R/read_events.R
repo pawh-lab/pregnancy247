@@ -2,7 +2,7 @@ read_events <- function(subject, trimester, file = NULL, ...) {
 
   if (is.null(file)) {
     subject_id <- paste0(subject, trimester)
-    data_loc <- paste0(loc(subject, trimester), subject_id)
+    data_loc <- paste0(loc(subject), subject_id)
     files <- list.files(path = data_loc, pattern = "EventsEx.csv$")
     dat <- utils::read.csv(
       file = paste0(data_loc, "/", files),
