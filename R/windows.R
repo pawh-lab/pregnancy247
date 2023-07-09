@@ -1,3 +1,75 @@
+#' Determine event windows for activities
+#'
+#' Determine sleep, nap, work, and monitor wear windows recorded by the
+#' Actiwatch or by the subject in their diary.
+#'
+#' @name windows
+#'
+#' @param sleep A `data.sleep` object produced by [read_sleep()].
+#'
+#' @details These functions required that a `data.sleep` object is used as this
+#' type of object contains the specific variable names to determine the daily
+#' windows of sleep, naps, work, and monitor wear.
+#'
+#' The sleep and nap windows may be soley on times recorded by the Actiwatch,
+#' which tracks information based on activity, light, and event markers.
+#' Variables that end with `input` will denote how the sleep and nap windows
+#' should be recorded. Below is a list of the input values and their relation
+#' to how the times are to be record.
+#' * `1` denotes event marker time
+#' * `2` denotes white light time
+#' * `3` denotes diary record time
+#' * `4` denotes activity time
+#'
+#' Each of the windows are initialing created with diary dates recorded by the
+#' subject. The dates and times are altered based on time of day in relation to
+#' the initial date. As an example, suppose subject 0001-AB records information
+#' in their diary on 01-01-2023, including their sleep onset and wake times.
+#' With the Pregnancy 24/7 study, the start of each day begins with sleep onset.
+#' So, the sleep onset and wake times initially start with the same date and
+#' need to be altered so a wake time of 6:00 AM is actually recorded to occur on
+#' 01-02-2023 and not 01-01-2023. Or, if the sleep onset time was at 12:00 AM,
+#' the date is recorded as 01-02-2023.
+#'
+#' `windows_work()` and `windows_monitor()` are soley based on times recorded
+#' by the subject in their log.
+#'
+#' The window creation functions also may require user input if their is a
+#' missing date or time. It will prompt you with a question whether to proceed
+#' with processing the windows given a certain day has missing data. If it is
+#' known had of time that certain days will have invalid data the missing data
+#' may not be problem, as the invalid data will be excluded later.
+#'
+#' @return A `list` containing two numeric vectors named `start` and `end` that
+#' are formatted as date-time (`POSIXct`) based on UTC time-zone.
+#'
+#' @examples
+#' \dontrun{
+#' wind_sleep <- windows_sleep(sleep = sleep)
+#' sleep_start <- wind_sleep$start
+#' sleep_end <- wind_sleep$end
+#' }
+#'
+#' \dontrun{
+#' wind_nap <- windows_nap(sleep = sleep)
+#' nap_start <- wind_nap$start
+#' nap_end <- wind_nap$end
+#' }
+#'
+#' \dontrun{
+#' wind_work <- windows_work(sleep = sleep)
+#' work_start <- wind_work$start
+#' work_end <- wind_work$end
+#' }
+#'
+#' \dontrun{
+#' wind_monitor <- windows_monitor(sleep = sleep)
+#' monitor_off <- wind_monitor$start
+#' monitor_on <- wind_monitor$end
+#' }
+#'
+#' @rdname windows
+#' @export windows_sleep
 windows_sleep <- function(sleep) {
   # Checking parameter ####
   if (!("data.sleep" %in% class(sleep))) {
@@ -242,6 +314,8 @@ windows_sleep <- function(sleep) {
   return(list(start = sleep_start, end = sleep_end))
 }
 
+#' @rdname windows
+#' @export windows_nap
 windows_nap <- function(sleep) {
   # Checking parameter ####
   if (!("data.sleep" %in% class(sleep))) {
@@ -490,6 +564,8 @@ windows_nap <- function(sleep) {
   return(list(start = nap_start, end = nap_end))
 }
 
+#' @rdname windows
+#' @export windows_work
 windows_work <- function(sleep) {
   # Checking parameter ####
   if (!("data.sleep" %in% class(sleep))) {
@@ -604,6 +680,8 @@ windows_work <- function(sleep) {
   return(list(start = work_start, end = work_end))
 }
 
+#' @rdname windows
+#' @export windows_monitor
 windows_monitor <- function(sleep) {
   # Checking parameter ####
   if (!("data.sleep" %in% class(sleep))) {
