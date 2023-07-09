@@ -3,18 +3,20 @@ Title: Data procressing for Pregnancy 24/7
 Version: 0.0.0.9000
 Date: 2023-06-07
 Authors@R: 
-    person(
-        "D. Erik", "Boonstra", role = c("aut", "cre"),
-        email = "daniel-boonstra@uiowa.edu",
-        comment = c(ORCID = "0009-0005-1599-1809")     
-    )
-Description: Processes the raw sleep diary and ActivPal data for The University of Iowa [Pregnancy 24/7](https://clinicaltrials.uihealthcare.org/studies/pregnancy-247) research study conducted by Kara Whitaker.
+  person(
+    "D. Erik", "Boonstra", role = c("aut", "cre"),
+    email = "daniel-boonstra@uiowa.edu",
+    comment = c(ORCID = "0009-0005-1599-1809")     
+  )
+Description: Processes the raw Actiwatch, sleep diary, and activPAL data for The University of Iowa [Pregnancy 24/7](https://clinicaltrials.uihealthcare.org/studies/pregnancy-247) research study conducted by Kara Whitaker.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Language: es
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports: 
-    dplyr,
-    readr,
-    readxl
+  dplyr,
+  lubridate,
+  readr,
+  readxl,
+  tidyr
