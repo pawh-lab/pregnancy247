@@ -185,7 +185,8 @@ process_data <- function(
   merge_dat <- merge_events(
     data = process_dat, add_events = temp_sleep,
     start_time = start_time, end_time = end_time,
-    off_times = wind_monitor, good_days = good_days
+    off_times = wind_monitor, good_days = good_days,
+    remove_days = TRUE
   )
 
   # Creating 1 second epoch data set ####

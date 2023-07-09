@@ -1,3 +1,52 @@
+#' Merge event data together
+#'
+#' Merge events data set produced by [process_events()] with any extra events
+#' that needed to be included by an external source, such as the Actiwatch and
+#' sleep diary.
+#' 
+#' @param data A `process.data.events` object produced by [process_events()]
+#' @param add_events A `data.frame` of events to merge with `data` that has the
+#' same variable names as `data`.
+#' @param start_time A date-time (POSIXct) value that denotes first date and
+#' time that should be recorded in merged data set. Default is `NA` to indicate
+#' that the merge data set does not need to be subsetted.
+#' @param end_time A date-time (POSIXct) value that denotes last date and time
+#' that should be recorded in merged data set. Default is `NA` to indicate
+#' that the merge data set does not need to be subsetted.
+#' @param off_times A `list` containing two objects of equal length denoting the
+#' beginning and ending times of when the monitors were removed. For the
+#' Pregnancy 24/7 study, the [windows_monitor()] function was used to find these
+#' times. Default is `NULL`, which indicates that is no monitor off times.
+#' @param good_days An integer vector denoting the wear days that have valid
+#' data. The default is `1:9`, as for the Pregnancy 24/7 study the wear period
+#' last nine days.
+#' @param remove_days A logical denoting if merge data set should be subsetted
+#' by the `good_days`. Default is FALSE.
+#'
+#' @details After `data` and `add_events` have been merged together, all missing
+#' values created by merging the two data set together are filled in by their
+#' appropriate values. For the looping variables, usually, the last value is
+#' carried forwarded. As for the activity variables, it depends on how the
+#' original variable was created as for how the missing values are filled in.
+#'
+#' If there are monitor off times, the looping variables are replaced with the
+#' value of `99` to indicate a special type of missing values related to
+#' monitor wear.
+#'
+#' There are two more objectives of this function.
+#' 1. Round the `time` variable to the nearest second with
+#' [lubridate::round_date()] and
+#' 2. create a new variable called `event` that denotes the event in recorded.
+#'
+#' @return A `merge.data.events` object, which is a `data.frame` with all of the
+#' variables in `data` plus the `event` variable.
+#'
+#' @seealso [lubridate::round_date()]
+#'
+#' @examples
+#' # See process_data() for an example of how this function is used.
+#'
+#' @export merge_events
 merge_events <- function(
   data, add_events, start_time = NA, end_time = NA, off_times = NULL,
   good_days = 1:9, remove_days = FALSE
