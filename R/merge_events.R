@@ -3,7 +3,7 @@
 #' Merge events data set produced by [process_events()] with any extra events
 #' that needed to be included by an external source, such as the Actiwatch and
 #' sleep diary.
-#' 
+#'
 #' @param data A `process.data.events` object produced by [process_events()]
 #' @param add_events A `data.frame` of events to merge with `data` that has the
 #' same variable names as `data`.
@@ -41,7 +41,7 @@
 #' @return A `merge.data.events` object, which is a `data.frame` with all of the
 #' variables in `data` plus the `event` variable.
 #'
-#' @seealso [lubridate::round_date()]
+#' @seealso [lubridate::round_date()], [tidyr::fill()]
 #'
 #' @examples
 #' # See process_data() for an example of how this function is used.
