@@ -1,11 +1,48 @@
+#' Summarize daily activity
+#'
+#' The activities during the wear period are summarized using events and 1
+#' second EPOCH data for the `subject` of interest during the `trimester` of
+#' interest.
+#'
+#' @inheritParams read_sleep
+#' @param data_events Either a `process.data.events` or `merge.data.events` data
+#' set.
+#' @param data_1s_epoch A `one.epoch.data` object created by
+#' [create_1s_epoch()].
+#' @param all_days An integer vector denoting the all the possible wear days.
+#' The default is 1:9, as for the Pregnancy 24/7 study the wear period last nine
+#' days.
+#' @inheritParams create_1s_epoch
+#'
+#' @details See the vingettes for a full description of the variables created.
+#'
+#' @return A named `list` with objects:
+#' * `daily` a `data.frame` containing daily summary of activities for all the
+#' possible wear days
+#' * `avgs` a `data.frame` containing the averages of the activities during the
+#' wear period.
+#'
+#' @examples
+#' \dontrun{
+#' process_dat <- process_events(data = dat)
+#' sec_by_sec <- create_1s_epoch(data = process_dat)
+#' summ_daily <- summarize_daily(
+#'  subject = "0001-AB", trimester = "1",
+#'  data_events = process_dat, data_1s_epoch = sec_by_sec
+#' )
+#' }
+#'
+#' @export summarize_daily
 summarize_daily <- function(
   subject, trimester, data_events, data_1s_epoch,
   all_days = 1:9, good_days = 1:9
 ) {
 
   # Checking parameter values ####
-  if (!("merge.data.events" %in% class(data_events))) {
-    stop("data must be a merge.data.events object created by merge_events")
+  check1 <- !("merge.data.events" %in% class(data))
+  check2 <- !("process.data.events" %in% class(data))
+  if (check1 || check2) {
+    stop("data must be either a process.data.event or merge.data.events object")
   }
 
   if (!("one.epoch.data" %in% class(data_1s_epoch))) {
@@ -185,7 +222,7 @@ summarize_daily <- function(
 
     if (nrow(day[[j]]) != 0) {
       ##### Number of sit to stand transitions per day
-      variables$sitstand[j] <- breaks.AP(day[[j]]$ap.posture)
+      variables$sitstand[j] <- breaks_ap(day[[j]]$ap.posture)
     }
   }
 
@@ -248,20 +285,20 @@ summarize_daily <- function(
       )
 
       #### Total time in moderate intensity (>= 3 to 6 METS) activity per day
-      variables$mpa1_min[j] <- MPA.min.AP(mets = day[[j]]$mets1, epoch = 1)
-      variables$mpa30_min[j] <- MPA.min.AP(mets = day[[j]]$mets30, epoch = 1)
-      variables$mpa60_min[j] <- MPA.min.AP(mets = day[[j]]$mets60, epoch = 1)
+      variables$mpa1_min[j] <- mpa_min_ap(mets = day[[j]]$mets1, epoch = 1)
+      variables$mpa30_min[j] <- mpa_min_ap(mets = day[[j]]$mets30, epoch = 1)
+      variables$mpa60_min[j] <- mpa_min_ap(mets = day[[j]]$mets60, epoch = 1)
 
       #### Total time in vigorous intensity (>= 6 METS) activity per day
-      variables$vpa1_min[j] <- VPA.min.AP(mets = day[[j]]$mets1, epoch = 1)
-      variables$vpa30_min[j] <- VPA.min.AP(mets = day[[j]]$mets30, epoch = 1)
-      variables$vpa60_min[j] <- VPA.min.AP(mets = day[[j]]$mets60, epoch = 1)
+      variables$vpa1_min[j] <- vpa_min_ap(mets = day[[j]]$mets1, epoch = 1)
+      variables$vpa30_min[j] <- vpa_min_ap(mets = day[[j]]$mets30, epoch = 1)
+      variables$vpa60_min[j] <- vpa_min_ap(mets = day[[j]]$mets60, epoch = 1)
 
       #### Total time in moderate-to-vigorous intensity (>= 3 METS) activity
       #### per day
-      variables$mvpa1_min[j] <- mvpa.min.AP(day[[j]]$mets1, epoch = 1)
-      variables$mvpa30_min[j] <- mvpa.min.AP(day[[j]]$mets30, epoch = 1)
-      variables$mvpa60_min[j] <- mvpa.min.AP(day[[j]]$mets60, epoch = 1)
+      variables$mvpa1_min[j] <- mvpa_min_ap(day[[j]]$mets1, epoch = 1)
+      variables$mvpa30_min[j] <- mvpa_min_ap(day[[j]]$mets30, epoch = 1)
+      variables$mvpa60_min[j] <- mvpa_min_ap(day[[j]]$mets60, epoch = 1)
 
       ##### Estimating the minutes spent in bouts of activity that qualify
       #### towards meeting the physical activity guidelines (10 minutes)
@@ -405,7 +442,7 @@ summarize_daily <- function(
   variables$sitstand_sleep <- NA
   for (j in seq_along(good_days)) {
     if (nrow(sleep_window[[j]]) != 0) {
-      variables$sitstand_sleep[j] <- breaks.AP(sleep_window[[j]]$ap.posture)
+      variables$sitstand_sleep[j] <- breaks_ap(sleep_window[[j]]$ap.posture)
     }
   }
 
