@@ -1,7 +1,42 @@
+#' Create a 1 second EPOCH data set
+#'
+#' Transforming the events data to a one second EPOCH data that contains
+#' expanded metrics on physical activity.
+#'
+#' @param data Either a `process.data.events` or `merge.data.events` data set to
+#' be converted to a one second EPOCH data set
+#' @inheritParams merge_events
+#'
+#' @details The `cumulativesteps` and `methrs` variables are renamed to conform
+#' to previous work done in this field.
+#' * `cumulativesteps` to `steps`
+#' * `methrs` to `met.hrs`
+#'
+#' One second, thirty second, and sixty second variants of MET hours are created
+#' and named accordingly.
+#' * `mets1` for one second
+#' * `mets30` for thirty second
+#' * `mets60` for sixty second
+#'
+#' @return A `one.epoch.data` object, which is a data.frame that has the same
+#' variables as the `data` parameter plus `mets1`, `mets30`, `mets60`, and
+#' * `date` which is just date version of the `time` variable and
+#' * `ap.posture` which is a replicate of the `activity` variable to conform to
+#' previous work.
+#'
+#' @examples
+#' \dontrun{
+#' process_dat <- process_events(data = dat)
+#' sec_by_sec <- create_1s_epoch(data = process_dat)
+#' }
+#'
+#' @export create_1s_epoch
 create_1s_epoch <- function(data, good_days = 1:9, remove_days = FALSE) {
   # Checking parameters ####
-  if (!("merge.data.events" %in% class(data))) {
-    stop("data must be a merge.data.events object created by merge_events")
+  check1 <- !("merge.data.events" %in% class(data))
+  check2 <- !("process.data.events" %in% class(data))
+  if (check1 || check2) {
+    stop("data must be either a process.data.event or merge.data.events object")
   }
 
   if (!all(is.integer(good_days))) {

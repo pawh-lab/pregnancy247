@@ -72,5 +72,5 @@ There are two more objectives of this function.
 
 }
 \seealso{
-\code{\link[lubridate:round_date]{lubridate::round_date()}}
+\code{\link[lubridate:round_date]{lubridate::round_date()}}, \code{\link[tidyr:fill]{tidyr::fill()}}
 }
