@@ -18,7 +18,10 @@ Imports:
     activpalProcessing,
     dplyr,
     ggplot2,
+    graphics,
+    grDevices,
     lubridate,
     readr,
     readxl,
-    tidyr
+    tidyr,
+    utils
