@@ -1,3 +1,33 @@
+#' Graphing events
+#'
+#' Graphing the activity and sleep during the wear period.
+#'
+#' @param data A `one.epoch.data` object created by [create_1s_epoch()].
+#' @param sleep_times A `data.frame` that contains information on sleep and nap
+#' windows during the wear period. The data set must contain the following
+#' variables and the default is `NULL` denoting sleep data does not need to be
+#' included.
+#' * a date-time object named `sleep_start` denoting sleep and nap onset
+#' * a date-time object named `sleep_stop` denoting sleep and nap wake times
+#' * an integer vector named `day` denoting wear day
+#' * a character vector named `label` denoting the type of sleep
+#' @param plot A logical denoting where the plot should appear.
+#'
+#' @details Activities are generally grouped by 300 second intervals; however,
+#' if the day does not last more than 300 seconds then the activities are
+#' grouped by 50 second intervals. The specific acitivies examined in the plot
+#' are standing, walking, and laying.
+#'
+#' @return A [ggplot2::ggplot()] object that may be displayed or saved later.
+#'
+#' @seealso [ggplot2::ggplot()]
+#'
+#' @examples
+#' \dontrun{
+#' process_dat <- process_events(data = dat)
+#' sec_by_sec <- create_1s_epoch(data = process_dat)
+#' g <- plot_1s_epoch(sec_by_sec)
+#' }
 plot_1s_epoch <- function(data, sleep_times = NULL, plot = FALSE) {
   # Checking parameter values ####
   if (!("one.epoch.data" %in% class(data))) {

@@ -15,8 +15,9 @@ Language: es
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports: 
-  dplyr,
-  lubridate,
-  readr,
-  readxl,
-  tidyr
+    dplyr,
+    ggplot2,
+    lubridate,
+    readr,
+    readxl,
+    tidyr
