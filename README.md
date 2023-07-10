@@ -6,8 +6,8 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of `pregnancy247` is to process the raw sleep diary,
-AcitvWATCH, and ActivPAL data for [The University of Iowa Pregnancy
+The goal of `pregnancy247` is to process the raw sleep diary, Actiwatch,
+and activPAL data for [The University of Iowa Pregnancy
 24/7](https://clinicaltrials.uihealthcare.org/studies/pregnancy-247)
 research study conducted by [Kara
 Whitaker](https://clas.uiowa.edu/hhp/people/kara-m-whitaker). This
@@ -21,13 +21,4 @@ You can install the development version of pregnancy247 from
 ``` r
 # install.packages("devtools")
 devtools::install_github("deboonstra/pregnancy247")
-```
-
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-``` r
-library(pregnancy247)
-## basic example code
 ```
