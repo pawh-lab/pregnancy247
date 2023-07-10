@@ -137,25 +137,25 @@ summarize_daily <- function(
   for (j in seq_along(good_days)) {
     if (nrow(day[[j]]) != 0) {
       #### Number of sit bouts > 30 minutes per day
-      variables$sed30_bout[j] <- prolonged.sed.bouts.num(
+      variables$sed30_bout[j] <- activpalProcessing::prolonged.sed.bouts.num(
         posture = day[[j]]$ap.posture,
         epoch = 1, n = 30
       )
 
       #### Number of sit bouts > 60 minutes per day
-      variables$sed60_bout[j] <- prolonged.sed.bouts.num(
+      variables$sed60_bout[j] <- activpalProcessing::prolonged.sed.bouts.num(
         posture = day[[j]]$ap.posture,
         epoch = 1, n = 60
       )
 
       #### Time spent in sitting bouts > 30 minutes per day
-      variables$sed30_min[j] <- prolonged.sed.bouts.min(
+      variables$sed30_min[j] <- activpalProcessing::prolonged.sed.bouts.min(
         posture = day[[j]]$ap.posture,
         epoch = 1, n = 30
       )
 
       #### Time spent in sitting bouts > 60 minutes per day
-      variables$sed60_min[j] <- prolonged.sed.bouts.min(
+      variables$sed60_min[j] <- activpalProcessing::prolonged.sed.bouts.min(
         posture = day[[j]]$ap.posture,
         epoch = 1, n = 60
       )
@@ -231,17 +231,17 @@ summarize_daily <- function(
       variables$met_hrs[j] <- sum(day_dat[[j]]$methrs, na.rm = TRUE)
 
       #### Total time in light intensity (1.5 to < 3 METS) activity per day
-      variables$lpa1_min[j] <- lit.min.AP(
+      variables$lpa1_min[j] <- activpalProcessing::lit.min.AP(
         mets = day[[j]]$mets1,
         posture = day[[j]]$ap.posture,
         epoch = 1
       )
-      variables$lpa30_min[j] <- lit.min.AP(
+      variables$lpa30_min[j] <- activpalProcessing::lit.min.AP(
         mets = day[[j]]$mets30,
         posture = day[[j]]$ap.posture,
         epoch = 1
       )
-      variables$lpa60_min[j] <- lit.min.AP(
+      variables$lpa60_min[j] <- activpalProcessing::lit.min.AP(
         mets = day[[j]]$mets60,
         posture = day[[j]]$ap.posture,
         epoch = 1
@@ -265,15 +265,13 @@ summarize_daily <- function(
 
       ##### Estimating the minutes spent in bouts of activity that qualify
       #### towards meeting the physical activity guidelines (10 minutes)
-      variables$guideline_minbout_10[j] <- guideline.bouts.min(
-        mets = day[[j]]$mets1
-      )
+      minbout <- activpalProcessing::guideline.bouts.min(mets = day[[j]]$mets1)
+      variables$guideline_minbout_10[j] <- minbout
 
       #### Estimating the nubmer of bouts to activity that qualify towards
       #### meeting the physical activity guidelines (10 minutes)
-      variables$guideline_numbout_10[j] <- guideline.bouts.num(
-        mets = day[[j]]$mets1
-      )
+      numbout <- activpalProcessing::guideline.bouts.num(mets = day[[j]]$mets1)
+      variables$guideline_numbout_10[j] <- numbout
 
       #### Total time spend in LPA expressed as a percent of waking time and
       #### wear time
