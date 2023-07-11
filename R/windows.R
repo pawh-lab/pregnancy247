@@ -297,7 +297,7 @@ windows_sleep <- function(sleep) {
     hold2 <- !is.na(sleep_start[j]) & is.na(sleep_end[j])
     if ((hold1 || hold2)) {
       jj <- all_days[j]
-      resp <- menu(
+      resp <- utils::menu(
         choices = c("Yes", "No"),
         graphics = TRUE,
         title = paste0(
@@ -546,7 +546,7 @@ windows_nap <- function(sleep) {
     hold2 <- !is.na(nap_start[j]) & is.na(nap_end[j])
     if ((hold1 || hold2)) {
       jj <- all_days[j]
-      resp <- menu(
+      resp <- utils::menu(
         choices = c("Yes", "No"),
         graphics = TRUE,
         title = paste0(
@@ -662,7 +662,7 @@ windows_work <- function(sleep) {
     hold2 <- !is.na(work_start[j]) & is.na(work_end[j])
     if ((hold1 || hold2)) {
       jj <- all_days[j]
-      resp <- menu(
+      resp <- utils::menu(
         choices = c("Yes", "No"),
         graphics = TRUE,
         title = paste0(
@@ -778,7 +778,7 @@ windows_monitor <- function(sleep) {
     hold2 <- !is.na(monitor_off[j]) & is.na(monitor_on[j])
     if ((hold1 || hold2)) {
       jj <- all_days[j]
-      resp <- menu(
+      resp <- utils::menu(
         choices = c("Yes", "No"),
         graphics = TRUE,
         title = paste0(

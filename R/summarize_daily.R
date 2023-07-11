@@ -131,7 +131,7 @@ summarize_daily <- function(
   #### the sleep data on that day
   variables$day_of_week <- NA
   for (j in seq_along(good_days)) {
-    variables$day_of_week[j] <- weekdays(median(day_total[[j]]$time))
+    variables$day_of_week[j] <- weekdays(stats::median(day_total[[j]]$time))
   }
 
   ## Activity variables ####
