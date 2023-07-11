@@ -1,7 +1,7 @@
 Package: pregnancy247
-Title: Data procressing for Pregnancy 24/7
-Version: 0.0.0.9000
-Date: 2023-06-07
+Title: Data procressing for the Pregnancy 24/7 study
+Version: 0.1.0
+Date: 2023-07-11
 Authors@R: 
   person(
     "D. Erik", "Boonstra", role = c("aut", "cre"),
