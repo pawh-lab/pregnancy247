@@ -1,3 +1,58 @@
+#' Process data for the Pregnancy 24/7 study
+#'
+#' Process the Actiwatch, sleep diary, and activPAL data for the Pregnancy 24/7
+#' study.
+#'
+#' @inheritParams read_sleep
+#' @param sleep_source Either a path to a file, a connection, or literal data
+#' (either a single string or a raw vector). This is an intermediate parameter
+#' to `file` parameter of [read_sleep()], which requires a CSV file type.
+#' @param day1 Logical denoting this a valid day of wear for day 1 of the wear
+#' period. Default is `TRUE`.
+#' @param day2 Logical denoting this a valid day of wear for day 2 of the wear
+#' period. Default is `TRUE`.
+#' @param day3 Logical denoting this a valid day of wear for day 3 of the wear
+#' period. Default is `TRUE`.
+#' @param day4 Logical denoting this a valid day of wear for day 4 of the wear
+#' period. Default is `TRUE`.
+#' @param day5 Logical denoting this a valid day of wear for day 5 of the wear
+#' period. Default is `TRUE`.
+#' @param day6 Logical denoting this a valid day of wear for day 6 of the wear
+#' period. Default is `TRUE`.
+#' @param day7 Logical denoting this a valid day of wear for day 7 of the wear
+#' period. Default is `TRUE`.
+#' @param day8 Logical denoting this a valid day of wear for day 8 of the wear
+#' period. Default is `TRUE`.
+#' @param day9 Logical denoting this a valid day of wear for day 9 of the wear
+#' period. Default is `TRUE`.
+#'
+#' @details This function is based on the specific needs of the Pregnancy 24/7
+#' study. Thus, the decision to only include parameters `day1` through `day9`
+#' to denote valid wear days was because the wear period for Pregnancy 24/7 only
+#' lasted nine days. If added `day` parameters are needed, this function can be
+#' adjusted for that change by either
+#' * adding a specific `day` parameter or
+#' * creating a new parameter that is a logical vector that is length of wear
+#' period and removing the `day` parameters.
+#'
+#' The `day` parameters only need to be specified when a day is invalid and to
+#' make that specification have `day = FALSE`.
+#'
+#' The entire creation of this function depends on the other functions in the
+#' `pregnancy247` package. There is no `R` object returned by this function, but
+#' files are written to their appropriate locations based on the `subject` and
+#' `trimester` parameters.
+#'
+#' @examples
+#' \dontrun{
+#' # 0001-AB ####
+#' ## Trimester 1 ####
+#' process_data(
+#'  subject = "0001-AB", trimester = 1, sleep_source = "./sleep.csv"
+#' )
+#' }
+#'
+#' @export process_data
 process_data <- function(
   subject, trimester, sleep_source,
   day1 = TRUE, day2 = TRUE, day3 = TRUE,
