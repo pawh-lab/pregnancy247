@@ -62,7 +62,7 @@ read_sleep <- function(file, subject, trimester, ...) {
   ## For the entire sample ####
   sleep$subject_id <- paste0(
     sleep$record_id,
-    substr(sleep$readcap_event_name, 7, 7)
+    substr(sleep$redcap_event_name, 7, 7)
   )
   ### Moving newly created subject IDs to the first column ####
   sleep <- dplyr::relocate(sleep, subject_id)
