@@ -110,7 +110,7 @@ process_data <- function(
   ### Checking if shift-worker ####
   if (!is.na(sleep$diary_24nosleep)) {
     if (sleep$diary_24nosleep == 1) {
-      resp <- menu(
+      resp <- utils::menu(
         choices = c("Yes", "No"),
         graphics = TRUE,
         title = paste0(
