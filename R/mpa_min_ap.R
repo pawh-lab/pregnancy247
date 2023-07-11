@@ -21,7 +21,7 @@
 #' x <- runif(100, 1, 10)
 #' mpa_min_ap(x)
 #' vpa_min_ap(x)
-#' mvp_min_ap(x)
+#' mvpa_min_ap(x)
 #'
 #' @rdname mpa_min_ap
 #' @export mpa_min_ap
