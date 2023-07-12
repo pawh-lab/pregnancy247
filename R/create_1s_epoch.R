@@ -33,9 +33,9 @@
 #' @export create_1s_epoch
 create_1s_epoch <- function(data, good_days = 1:9, remove_days = FALSE) {
   # Checking parameters ####
-  check1 <- !("merge.data.events" %in% class(data))
-  check2 <- !("process.data.events" %in% class(data))
-  if (check1 || check2) {
+  check1 <- "merge.data.events" %in% class(data)
+  check2 <- "process.data.events" %in% class(data)
+  if (!(check1 || check2)) {
     stop("data must be either a process.data.event or merge.data.events object")
   }
 
