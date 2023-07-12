@@ -39,8 +39,8 @@ summarize_daily <- function(
 ) {
 
   # Checking parameter values ####
-  check1 <- "merge.data.events" %in% class(data)
-  check2 <- "process.data.events" %in% class(data)
+  check1 <- "merge.data.events" %in% class(data_events)
+  check2 <- "process.data.events" %in% class(data_events)
   if (!(check1 || check2)) {
     stop("data must be either a process.data.event or merge.data.events object")
   }
