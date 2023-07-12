@@ -45,7 +45,8 @@ the functions depend on your file system.
 This package will be upgraded to version `1.0.0` when `process_data`,
 `check_dir`, and `loc` take a parameter called `dirs`, which should be a
 character vector containing the sub-directories within the main project
-directory that store the data.
+directory that store the data. Additionally, when the package contains
+more functional examples and vingettes.
 
 ## Installation
 
@@ -59,6 +60,6 @@ devtools::install_github("deboonstra/pregnancy247")
 ```
 
 There is an added installation call to a package called
-`activpalProcessing` because this package install no longer available on
+`activpalProcessing` because this package is no longer available on
 `CRAN` and an archived copy of this package is used. So, it must be
 installed prior to installing `pregnancy247`.

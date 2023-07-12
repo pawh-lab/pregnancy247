@@ -37,7 +37,7 @@ working directory set the directory containing the
 
 sub-directories of data. If you are viewing the package as a basis of code for your own research study, you will need to make changes to how the functions depend on your file system.
 
-This package will be upgraded to version `1.0.0` when `process_data`, `check_dir`, and `loc` take a parameter called `dirs`, which should be a character vector containing the sub-directories within the main project directory that store the data. 
+This package will be upgraded to version `1.0.0` when `process_data`, `check_dir`, and `loc` take a parameter called `dirs`, which should be a character vector containing the sub-directories within the main project directory that store the data. Additionally, when the package contains more functional examples and vingettes.
 
 ## Installation
 
@@ -48,4 +48,4 @@ You can install the development version of pregnancy247 from [GitHub](https://gi
 devtools::install_github("deboonstra/activpalProcessing")
 devtools::install_github("deboonstra/pregnancy247")
 ```
-There is an added installation call to a package called `activpalProcessing` because this package install no longer available on `CRAN` and an archived copy of this package is used. So, it must be installed prior to installing `pregnancy247`.
+There is an added installation call to a package called `activpalProcessing` because this package is no longer available on `CRAN` and an archived copy of this package is used. So, it must be installed prior to installing `pregnancy247`.
