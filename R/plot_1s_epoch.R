@@ -28,6 +28,7 @@
 #' sec_by_sec <- create_1s_epoch(data = process_dat)
 #' g <- plot_1s_epoch(sec_by_sec)
 #' }
+#' @export plot_1s_epoch
 plot_1s_epoch <- function(data, sleep_times = NULL, plot = FALSE) {
   # Checking parameter values ####
   if (!("one.epoch.data" %in% class(data))) {
