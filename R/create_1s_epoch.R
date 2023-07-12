@@ -61,7 +61,7 @@ create_1s_epoch <- function(data, good_days = 1:9, remove_days = FALSE) {
   ## This dataset will use the event data converted to a sec by sec dataset
   sec_by_sec <- data.frame(
     event = NA,
-    time = lubridate::round_date(times, units = "second"),
+    time = lubridate::round_date(times, unit = "second"),
     datacount = NA,
     interval = NA,
     activity = NA,
