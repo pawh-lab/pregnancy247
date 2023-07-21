@@ -54,7 +54,7 @@
 read_sleep <- function(file, subject, trimester, ...) {
   # Reading in the sleep diary data for the entire sample ####
   options(readr.show_progress = FALSE)
-  sleep <- readr::read_csv(file = file, ...)
+  sleep <- utils::read.csv(file = file, na.string = c("", "NA", "N/A"), ...)
 
   # Creating subject ID variable ####
   ## For the subject of interest ####
