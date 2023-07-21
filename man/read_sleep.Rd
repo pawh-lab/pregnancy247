@@ -15,7 +15,7 @@ read_sleep(file, subject, trimester, ...)
 \item{trimester}{A character or integer vector denoting trimester of
 pregnancy.}
 
-\item{...}{Any other parameters needed for \code{\link[readr:read_delim]{readr::read_csv()}}.}
+\item{...}{Any other parameters needed for \code{\link[utils:read.table]{utils::read.csv()}}.}
 }
 \value{
 A \code{data.sleep} object is returned, which is a \code{data.frame} that only
@@ -28,7 +28,7 @@ Importing the raw CSV (comma-separated values) Actiwatch and sleep diary
 data based on the current working directory.
 }
 \details{
-The \code{file} argument and any other \code{\link[readr:read_delim]{readr::read_csv()}} arguments are
+The \code{file} argument and any other \code{\link[utils:read.table]{utils::read.csv()}} arguments are
 used to read in the CSV Actiwatch and sleep diary data. After the data is
 imported, the \code{subject} and \code{trimester} arguments are used to create an \code{id}
 variable for subject and trimester of interest.
@@ -63,5 +63,5 @@ sleep <- read_sleep("./sleep.csv", "0001-AB", "3")
 
 }
 \seealso{
-\code{\link[readr:read_delim]{readr::read_csv()}}
+\code{\link[utils:read.table]{utils::read.csv()}}
 }

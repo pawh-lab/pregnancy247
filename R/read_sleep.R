@@ -8,9 +8,9 @@
 #' @param subject A character vector denoting the Pregnancy 24/7 subject.
 #' @param trimester A character or integer vector denoting trimester of
 #' pregnancy.
-#' @param ... Any other parameters needed for [readr::read_csv()].
+#' @param ... Any other parameters needed for [utils::read.csv()].
 #'
-#' @details The `file` argument and any other [readr::read_csv()] arguments are
+#' @details The `file` argument and any other [utils::read.csv()] arguments are
 #' used to read in the CSV Actiwatch and sleep diary data. After the data is
 #' imported, the `subject` and `trimester` arguments are used to create an `id`
 #' variable for subject and trimester of interest.
@@ -37,7 +37,7 @@
 #' during the `trimester` of interest based on the temporarily created
 #' `id` variable.
 #'
-#' @seealso [readr::read_csv()]
+#' @seealso [utils::read.csv()]
 #'
 #' @examples
 #' \dontrun{
