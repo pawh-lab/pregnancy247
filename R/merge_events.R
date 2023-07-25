@@ -152,12 +152,21 @@ merge_events <- function(
 
   ### Adjusting to indicate that the monitor was taken off ####
   if (!is.null(off_times)) {
-    if (all(off_times[[1]] < off_times[[2]])) {
-      monitor_off <- off_times[[1]]
-      monitor_on <- off_times[[2]]
-    } else {
-      monitor_off <- off_times[[2]]
-      monitor_on <- off_times[[1]]
+    monitor_off <- as.POSIXct(rep(NA, length(off_times[[1]])), tz = "UTC")
+    monitor_on <- as.POSIXct(rep(NA, length(off_times[[1]])), tz = "UTC")
+    for (i in seq_along(off_times[[1]])) {
+      if (!is.na(off_times[[1]][i]) && !is.na(off_times[[2]][i])) {
+        if (off_times[[1]][i] <= off_times[[2]][i]) {
+          monitor_off[i] <- off_times[[1]][i]
+          monitor_on[i] <- off_times[[2]][i]
+        } else {
+          monitor_off[i] <- off_times[[2]][i]
+          monitor_on[i] <- off_times[[1]][i]
+        }
+      } else {
+        monitor_off[i] <- NA
+        monitor_on[i] <- NA
+      }
     }
     hold1 <- monitor_off[!is.na(monitor_off) & !is.na(monitor_on)]
     hold2 <- monitor_on[!is.na(monitor_off) & !is.na(monitor_on)]

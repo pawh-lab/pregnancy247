@@ -697,7 +697,7 @@ windows_monitor <- function(sleep) {
 
   # Monitor off ####
   monitor_off_diary <- c(sleep[1, grep("^diary_monitorsofftime", colnames(sleep))]) #nolint
-  monitor_off_diary <- monitor_off_diary[na_dates]
+  monitor_off_diary <- monitor_off_diary[na_dates[-9]]
   hold1 <- nchar(monitor_off_diary) == 4 & substr(monitor_off_diary, 2, 2) %in% c(":", ";") #nolint
   hold2 <- nchar(monitor_off_diary) == 5 & substr(monitor_off_diary, 3, 3) %in% c(":", ";") #nolint
   monitor_off_diary <- ifelse(
@@ -713,7 +713,7 @@ windows_monitor <- function(sleep) {
 
   # Monitor on ####
   monitor_on_diary <- c(sleep[1, grep("^diary_monitorsontime", colnames(sleep))]) #nolint
-  monitor_on_diary <- monitor_on_diary[na_dates]
+  monitor_on_diary <- monitor_on_diary[na_dates[-9]]
   hold1 <- nchar(monitor_on_diary) == 4 & substr(monitor_on_diary, 2, 2) %in% c(":", ";") #nolint
   hold2 <- nchar(monitor_on_diary) == 5 & substr(monitor_on_diary, 3, 3) %in% c(":", ";") #nolint
   monitor_on_diary <- ifelse(
@@ -759,10 +759,10 @@ windows_monitor <- function(sleep) {
       )
     }
 
-    ##### Adjusting the date for the end of the monitor off window. Due to the start
-    ##### and end of the monitor off window being based on the same diary entry date,
-    ##### the end of the monitor off window may begin before the start of the monitor
-    ##### off window.
+    ##### Adjusting the date for the end of the monitor off window. Due to the
+    ##### start and end of the monitor off window being based on the same diar
+    ##### entry date, the end of the monitor off window may begin before the
+    ##### start of the monitor off window.
     if (!is.na(monitor_off[j]) && !is.na(monitor_on[j])) {
       if (monitor_off[j] > monitor_on[j]) {
         monitor_on[j] <- monitor_on[j] + 86400
