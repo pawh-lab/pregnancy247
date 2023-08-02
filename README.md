@@ -54,9 +54,9 @@ You can install the development version of pregnancy247 from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("deboonstra/activpalProcessing")
-devtools::install_github("deboonstra/pregnancy247")
+# install.packages("remotes")
+remotes::install_github("deboonstra/activpalProcessing")
+remotes::install_github("deboonstra/pregnancy247")
 ```
 
 There is an added installation call to a package called
