@@ -10,7 +10,7 @@ write_msleep <- function(x, subject, trimester, nap = FALSE, file = NULL, ...) {
     stop("nap must be a logical (TRUE/FALSE) denoting if screening of nap data")
   }
 
-  # Exporting ####
+  # Determining file name ####
   if (is.null(file)) {
     data_loc <- paste0("./", subject, "/", "Visit ", trimester)
     if (nap) {
@@ -22,13 +22,10 @@ write_msleep <- function(x, subject, trimester, nap = FALSE, file = NULL, ...) {
         data_loc, "/", paste0(subject, trimester), "_restonly_flag.csv"
       )
     }
-    readr::write_csv(x = x, file = ff, na = "", ...)
   } else {
-    readr::write_csv(
-      x = x,
-      file = file,
-      na = "",
-      ...
-    )
+    ff <- file
   }
+
+  # Exporting data ####
+  readr::write_csv(x = x, file = ff, na = "", ...)
 }
