@@ -15,7 +15,7 @@
 #' # rest <- read_msleep()
 #'
 #' @export read_msleep
-read_msleep <- function(subject, trimester, nap = FALSE, ...) {
+read_msleep <- function(subject, trimester, nap = FALSE, file = NULL, ...) {
   # Checking parameter values ####
   if (!is.character(subject)) {
     stop("subject must be a character string denoting subject ID.")
@@ -30,17 +30,22 @@ read_msleep <- function(subject, trimester, nap = FALSE, ...) {
   # Setting file directory based on subject ID and trimester ####
   data_loc <- paste0("./", subject, "/", "Visit ", trimester)
   # Finding file based on if it is a nap ####
-  if (nap) {
-    files <- list.files(
-      path = data_loc,
-      pattern = "NAPSONLY.csv$"
-    )
+  if (is.null(file)) {
+    if (nap) {
+      files <- list.files(
+        path = data_loc,
+        pattern = "NAPSONLY.csv$"
+      )
+    } else {
+      files <- list.files(
+        path = data_loc,
+        pattern = "RESTONLY.csv$"
+      )
+    }
   } else {
-    files <- list.files(
-      path = data_loc,
-      pattern = "RESTONLY.csv$"
-    )
+    files <- file
   }
+  
   # Reading in temporary data set ####
   # to find the true length of the data set by excluding the rows after the
   # EXCLUDED interval types
@@ -62,6 +67,7 @@ read_msleep <- function(subject, trimester, nap = FALSE, ...) {
   dat <- subset(dat, subset = V1 %in% c("REST", "SLEEP"))
   # Providing column names ####
   if (ncol(dat) > 71) {
+    # Excluding extraneous columns
     dat <- dat[, 1:71]
   }
   names(dat) <- c(
