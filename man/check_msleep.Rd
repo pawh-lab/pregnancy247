@@ -2,22 +2,50 @@
 % Please edit documentation in R/check_msleep.R
 \name{check_msleep}
 \alias{check_msleep}
-\title{Screening the master sleep or nap data.}
+\title{Screening the sleep or nap data.}
 \usage{
-check_msleep(x, nap = FALSE)
+check_msleep(x, y = NULL, nap = FALSE, cutpoint = 30)
 }
 \arguments{
-\item{x}{A \code{msleep} object imported with \code{read_msleep}.}
+\item{x}{A \code{msleep} object imported with \code{\link[=read_msleep]{read_msleep()}}.}
 
-\item{nap}{Logical denoting if master nap data is to be screened for outlying
+\item{y}{An optional \code{msleep} object that is used for screening nap data
+collected by Actiwatch. Default is \code{NULL}, which coincides with the default
+value of \code{nap}.}
+
+\item{nap}{Logical denoting if nap data is to be screened for outlying
 values. Default is \code{FALSE}.}
+
+\item{cutpoint}{A numeric value denoting the amount of time in minutes to
+see if nap and sleep overlap. Default is \code{30} minutes.}
 }
 \value{
 A \code{msleep} object, which is a \code{data.frame} containing two additional
-variables \code{flag1} and \code{flag2}.
+variables \code{flag1} and \code{flag2}. The \code{flag1} variable contains values of 0, 1,
+or missing, where 0 denotes no issues with this observation, 1 denotes at
+least one issue with this observation, and missing denotes a value is missing
+for this observation. The \code{flag2} values provides a comment for the value of
+\code{flag1.}
 }
 \description{
-Screening the master sleep or nap data imported with \code{read_msleep()} for
-outlier values based on the expertise of
+Screening the sleep or nap Actiwatch data for each subject imported with
+\code{\link[=read_msleep]{read_msleep()}} for outlier values based on the expertise of
 \href{https://www.education.pitt.edu/people/cek51}{Christopher E. Kline}.
+}
+\details{
+The parameter \code{y} should only be specified if \code{nap = TRUE} and it
+should be the sleep data exported by Actiwatch. Also, \code{cutpoint} is only used
+if \code{nap = TRUE}. Overlapping nap and sleep windows is a part of the screening
+of nap data collected by Actiwatch.
+}
+\examples{
+\dontrun{
+# sleep
+msleep <- read_msleep(subject = "1000-AB", trimester = 3)
+msleep_test <- check_msleep(x = msleep)
+# nap
+mnap <- read_msleep(subject = "1000-AB", trimester = 3, nap = TRUE)
+mnap_test <- check(x = mnap, y = msleep, nap = TRUE)
+}
+
 }

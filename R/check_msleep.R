@@ -1,15 +1,39 @@
-#' Screening the master sleep or nap data.
+#' Screening the sleep or nap data.
 #'
-#' Screening the master sleep or nap data imported with `read_msleep()` for
-#' outlier values based on the expertise of
+#' Screening the sleep or nap Actiwatch data for each subject imported with
+#' [pregnancy247::read_msleep()] for outlier values based on the expertise of
 #' [Christopher E. Kline](https://www.education.pitt.edu/people/cek51).
 #'
-#' @param x A `msleep` object imported with `read_msleep`.
-#' @param nap Logical denoting if master nap data is to be screened for outlying
+#' @param x A `msleep` object imported with [pregnancy247::read_msleep()].
+#' @param y An optional `msleep` object that is used for screening nap data
+#' collected by Actiwatch. Default is `NULL`, which coincides with the default
+#' value of `nap`.
+#' @param nap Logical denoting if nap data is to be screened for outlying
 #' values. Default is `FALSE`.
+#' @param cutpoint A numeric value denoting the amount of time in minutes to
+#' see if nap and sleep overlap. Default is `30` minutes.
+#'
+#' @details The parameter `y` should only be specified if `nap = TRUE` and it
+#' should be the sleep data exported by Actiwatch. Also, `cutpoint` is only used
+#' if `nap = TRUE`. Overlapping nap and sleep windows is a part of the screening
+#' of nap data collected by Actiwatch.
 #'
 #' @return A `msleep` object, which is a `data.frame` containing two additional
-#' variables `flag1` and `flag2`.
+#' variables `flag1` and `flag2`. The `flag1` variable contains values of 0, 1,
+#' or missing, where 0 denotes no issues with this observation, 1 denotes at
+#' least one issue with this observation, and missing denotes a value is missing
+#' for this observation. The `flag2` values provides a comment for the value of
+#' `flag1.`
+#'
+#' @examples
+#' \dontrun{
+#' # sleep
+#' msleep <- read_msleep(subject = "1000-AB", trimester = 3)
+#' msleep_test <- check_msleep(x = msleep)
+#' # nap
+#' mnap <- read_msleep(subject = "1000-AB", trimester = 3, nap = TRUE)
+#' mnap_test <- check(x = mnap, y = msleep, nap = TRUE)
+#' }
 #'
 #' @export check_msleep
 check_msleep <- function(x, y = NULL, nap = FALSE, cutpoint = 30) {
