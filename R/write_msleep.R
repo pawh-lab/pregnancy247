@@ -68,7 +68,7 @@ write_msleep <- function(x, subject, trimester, nap = FALSE, file = NULL, ...) {
 
 #' @rdname write_msleep
 #' @export write_all_msleep
-write_all_msleep <- function(x, subject, trimester, nap = FALSE, file = NULL, ...) { #nolint
+write_all_msleep <- function(x, subject, trimester, nap = FALSE, file = NULL, ...) { # nolint
 
   # Determining file name ####
   if (is.null(file)) {
@@ -94,8 +94,11 @@ write_all_msleep <- function(x, subject, trimester, nap = FALSE, file = NULL, ..
         rep("numeric", 64), "character"
       )
     )
-    hold <- paste0(temp$subject_id, temp$trimester)
-    temp <- subset(temp, subset = paste0(subject, trimester) != hold)
+    hold <- paste0(subject, trimester)
+    temp <- subset(
+      x = temp,
+      subset = paste0(temp$subject_id, temp$trimester) != hold
+    )
     temp <- dplyr::bind_rows(temp, x)
     temp <- temp[order(temp$subject_id, temp$trimester), ]
     readr::write_csv(
