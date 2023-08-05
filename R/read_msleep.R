@@ -117,7 +117,7 @@ read_msleep <- function(subject, trimester, nap = FALSE, file = NULL, ...) {
   # Cleaning up resulting data ####
   dat$subject_id <- subject
   dat$trimester <- trimester
-  dat <- dplyr::relocate(dat, subject, .before = interval_type)
+  dat <- dplyr::relocate(dat, subject_id, .before = interval_type)
   dat <- dplyr::relocate(dat, trimester, .before = interval_type)
   rownames(dat) <- NULL
   # Returning data set
