@@ -120,6 +120,7 @@ read_msleep <- function(subject, trimester, nap = FALSE, file = NULL, ...) {
   dat <- dplyr::relocate(dat, subject_id, .before = interval_type)
   dat <- dplyr::relocate(dat, trimester, .before = interval_type)
   rownames(dat) <- NULL
+  dat$interval_num <- as.numeric(dat$interval_num)
   # Returning data set
   class(dat) <- c("msleep", "data.frame")
   return(dat)
