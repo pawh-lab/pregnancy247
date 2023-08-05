@@ -22,11 +22,13 @@ The goal of `pregnancy247` is to process the raw sleep diary, Actiwatch, and act
 
 This package has two unique selections of functions based on the different needs of the Pregnancy 24/7 study team. The first selection includes the
 
+- `read_msleep`,
 - `check_msleep`,
-- `create_dict`, and
-- `read_msleep`
+- `write_msleep`,
+- `write_all_msleep`, and
+- `quality_check`
 
-functions, which are used to read (`read_msleep`) in the *main* sleep data exported from the Actiwatch and check (`check_msleep`) whether the device recorded valid data. Rules for valid data may be found in the vingettes. The `create_dict` function creates a data dictionary and adjusts variable names for the *main* sleep data, as the variable names exported by the Actiwatch software do **not** conform to the `R` and `tidyverse` style. 
+functions. The `read_msleep` function imports the sleep or nap data exported from the Actiwatch to be screened for valid data by `check_msleep`, and `write_msleep` and `write_all_msleep` export the screend data. Rules for valid data may be found in the `vingettes`. `quality_check` is an interface to the above functions for ease of use.
 
 The second selection of functions includes the remaining functions not listed above. The `process_data` function provides the main interface to other functions based on the needs of the Pregnancy 24/7 study. Currently, for this package to operate appropriately, you need to have your
 working directory set the directory containing the
