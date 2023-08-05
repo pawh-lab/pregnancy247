@@ -4,11 +4,11 @@
 #' `subject`-specific directories.
 #'
 #' @name write_msleep
-#' 
+#'
 #' @inheritParams readr::write_csv
 #' @inheritParams read_msleep
 #' @param ... Any other parameters needed for [readr::write_csv()].
-#' 
+#'
 #' @details When `file` is the default value of `NULL` the `subject` and
 #' `trimester` parameters along with the current working directory are used to
 #' write the files that ends with
