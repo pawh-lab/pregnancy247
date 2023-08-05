@@ -87,7 +87,12 @@ write_all_msleep <- function(x, subject, trimester, nap = FALSE, file = NULL, ..
     temp <- utils::read.csv(
       file = ff,
       stringsAsFactors = FALSE,
-      na.string = ""
+      na.string = "",
+      colClasses = c(
+        rep(c("character", "numeric"), times = 2),
+        rep("character", 6),
+        rep("numeric", 64), "character"
+      )
     )
     hold <- paste0(temp$subject_id, temp$trimester)
     temp <- subset(temp, subset = paste0(subject, trimester) != hold)
