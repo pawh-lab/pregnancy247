@@ -1,18 +1,45 @@
-#' Import master sleep and nap data.
+#' Import Actiwatch sleep or nap data.
 #'
-#' Importing the raw ...
+#' Importing the raw Actiwatch sleep or nap for each subject.
+#'
+#' @inheritParams read_events
+#' @param nap Logical denoting if nap data is to be imported.
+#' Default is `FALSE`.
 #'
 #' @details Empty strings (`""`), missing values (`NA`), and not a number
-#' (`NaN`) values exported by the ActivWATCH device are all considered as
+#' (`NaN`) values exported by the Actiwatch device are all considered as
 #' missing values for this importing process.
 #'
+#' As the function is meant for the use of the Pittsburgh team, it
+#' assumes all of the subject data is located within a single folder. So, for
+#' appropriate use based on `subject` and `trimester` only, the working
+#' directory must be the main directory containing the data of each subject
+#' within subject-specific folders based on IDs. It is also assumed the names
+#' of the folders in subject-specific directories are
+#' * `Visit 1`,
+#' * `Visit 2`, and
+#' * `Visit 3`
+#'
+#' for each trimester of pregancy.
+#'
+#' If `file` is provided, then the data is imported based on the `file` name
+#' only even though `subject` and `trimester` are still required.
+#'
+#' The exporting data software by Actiwatch provides extraneous data,
+#' so the data is imported twice to find the data actually needed.
+#'
 #' @return A `msleep` object, which is a `data.frame` containing the imported
-#' master sleep or nap data.
+#' Actiwatch sleep or nap data. The exporting of data software by
+#' Actiwatch does not provide useable variable names. So, the variable names
+#' are assigned here by column location. See the `vingettes` for details on the
+#' variable names.
 #'
 #' @seealso `utils::read.csv()`
 #'
 #' @examples
-#' # rest <- read_msleep()
+#' \dontrun{
+#' msleep <- read_msleep(subject = "1000-AB", trimester = 1)
+#' }
 #'
 #' @export read_msleep
 read_msleep <- function(subject, trimester, nap = FALSE, file = NULL, ...) {
@@ -45,7 +72,7 @@ read_msleep <- function(subject, trimester, nap = FALSE, file = NULL, ...) {
   } else {
     files <- file
   }
-  
+
   # Reading in temporary data set ####
   # to find the true length of the data set by excluding the rows after the
   # EXCLUDED interval types

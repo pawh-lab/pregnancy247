@@ -2,33 +2,67 @@
 % Please edit documentation in R/read_msleep.R
 \name{read_msleep}
 \alias{read_msleep}
-\title{Import master sleep and nap data.}
+\title{Import Actiwatch sleep or nap data.}
 \usage{
-read_msleep(file, ...)
+read_msleep(subject, trimester, nap = FALSE, file = NULL, ...)
 }
 \arguments{
-\item{file}{Either a path to a file, a connection, or literal data
-(either a single string or a raw vector).}
+\item{subject}{A character vector denoting the Pregnancy 24/7 subject.}
 
-\item{...}{any other parameters needed for \code{readxl::read_xlsx()}.}
+\item{trimester}{A character or integer vector denoting trimester of
+pregnancy.}
+
+\item{nap}{Logical denoting if nap data is to be imported.
+Default is \code{FALSE}.}
+
+\item{file}{Either a path to a file, a connection, or literal data
+(either a single string or a raw vector). The default value is \code{NULL}, which
+uses the \code{subject} and \code{trimester} parameters to find the appropriate
+filename.}
+
+\item{...}{Any other parameters needed for \code{\link[utils:read.table]{utils::read.csv()}}.}
 }
 \value{
 A \code{msleep} object, which is a \code{data.frame} containing the imported
-master sleep or nap data.
+Actiwatch sleep or nap data. The exporting of data software by
+Actiwatch does not provide useable variable names. So, the variable names
+are assigned here by column location. See the \code{vingettes} for details on the
+variable names.
 }
 \description{
-Importing the raw Microsoft Excel (.xlsx) master sleep and nap data exported
-from the ActivWATCH device.
+Importing the raw Actiwatch sleep or nap for each subject.
 }
 \details{
 Empty strings (\code{""}), missing values (\code{NA}), and not a number
-(\code{NaN}) values exported by the ActivWATCH device are all considered as
+(\code{NaN}) values exported by the Actiwatch device are all considered as
 missing values for this importing process.
+
+As the function is meant for the use of the Pittsburgh team, it
+assumes all of the subject data is located within a single folder. So, for
+appropriate use based on \code{subject} and \code{trimester} only, the working
+directory must be the main directory containing the data of each subject
+within subject-specific folders based on IDs. It is also assumed the names
+of the folders in subject-specific directories are
+\itemize{
+\item \verb{Visit 1},
+\item \verb{Visit 2}, and
+\item \verb{Visit 3}
+}
+
+for each trimester of pregancy.
+
+If \code{file} is provided, then the data is imported based on the \code{file} name
+only even though \code{subject} and \code{trimester} are still required.
+
+The exporting data software by Actiwatch provides extraneous data,
+so the data is imported twice to find the data actually needed.
 }
 \examples{
-# rest <- read_msleep("msleep.xlsx")
+\dontrun{
+msleep <- read_msleep(subject = "1000-AB", trimester = 1)
+}
 
 }
 \seealso{
-\code{readxl::read_xlsx()}
+\code{utils::read.csv()}
 }
