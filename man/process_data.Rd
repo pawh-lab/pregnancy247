@@ -79,6 +79,10 @@ The entire creation of this function depends on the other functions in the
 \code{pregnancy247} package. There is no \code{R} object returned by this function, but
 files are written to their appropriate locations based on the \code{subject} and
 \code{trimester} parameters.
+
+Due to nature of the observational data, there is an inclusion of a second
+interval of napping for each wear day. This is implemented through
+\code{windows_nap()}.
 }
 \examples{
 \dontrun{

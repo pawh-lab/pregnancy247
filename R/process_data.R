@@ -42,6 +42,10 @@
 #' `pregnancy247` package. There is no `R` object returned by this function, but
 #' files are written to their appropriate locations based on the `subject` and
 #' `trimester` parameters.
+#' 
+#' Due to nature of the observational data, there is an inclusion of a second
+#' interval of napping for each wear day. This is implemented through
+#' `windows_nap()`.
 #'
 #' @examples
 #' \dontrun{
@@ -147,9 +151,16 @@ process_data <- function(
   sleep_end <- wind_sleep$end
 
   #### Nap ####
+
+  ##### First nap interval
   wind_nap <- windows_nap(sleep = sleep)
   nap_start <- wind_nap$start
   nap_end <- wind_nap$end
+
+  ##### Second nap interval
+  wind_nap_b <- windows_nap(sleep = sleep, interval = "second")
+  nap_start_b <- wind_nap_b$start
+  nap_end_b <- wind_nap_b$end
 
   #### Work ####
   wind_work <- windows_work(sleep = sleep)
@@ -168,6 +179,7 @@ process_data <- function(
     time = c(
       sleep_start, sleep_end,
       nap_start, nap_end,
+      nap_start_b, nap_end_b,
       work_start, work_end,
       monitor_off, monitor_on,
       sleep_end + 1, nap_end + 1
@@ -182,7 +194,7 @@ process_data <- function(
   #### Loop variables ####
   nr_sleep <- nrow(temp_sleep)
   len_sleep <- length(c(sleep_start, sleep_end))
-  len_nap <- length(c(nap_start, nap_end))
+  len_nap <- length(c(nap_start, nap_end, nap_start_b, nap_end_b))
   ##### Wear day ####
   temp_sleep$wear_day <- c(
     all_days[-1],
@@ -258,16 +270,18 @@ process_data <- function(
   sleep_times <- data.frame(
     sleep_start = c(
       sleep_start[-length(sleep_start)],
-      nap_start[-length(nap_start)]
+      nap_start[-length(nap_start)],
+      nap_start_b[-length(nap_start_b)]
     ),
     sleep_stop = c(
       sleep_end[-length(sleep_end)],
-      nap_end[-length(nap_end)]
+      nap_end[-length(nap_end)],
+      nap_end_b[-length(nap_end_b)]
     ),
-    day = c(all_days[-1], all_days[-length(all_days)]),
+    day = c(all_days[-1], rep(all_days[-length(all_days)], times = 2)),
     label = c(
       rep("sleep", length(all_days[-1])),
-      rep("nap", length(all_days[-length(all_days)]))
+      rep("nap", 2 * length(all_days[-length(all_days)]))
     )
   )
   ## Removing any of sleeping/napping times that occurred on invalid days
