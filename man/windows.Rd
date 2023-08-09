@@ -10,7 +10,7 @@
 \usage{
 windows_sleep(sleep)
 
-windows_nap(sleep)
+windows_nap(sleep, interval = "first")
 
 windows_work(sleep)
 
@@ -18,6 +18,10 @@ windows_monitor(sleep)
 }
 \arguments{
 \item{sleep}{A \code{data.sleep} object produced by \code{\link[=read_sleep]{read_sleep()}}.}
+
+\item{interval}{For \code{windows_nap()}, a character taking a value of
+\code{"first"} or \code{"second"} to denote if first or second napping windows. Default
+is \code{"first"}.}
 }
 \value{
 A \code{list} containing two numeric vectors named \code{start} and \code{end} that
@@ -28,7 +32,7 @@ Determine sleep, nap, work, and monitor wear windows recorded by the
 Actiwatch or by the subject in their diary.
 }
 \details{
-These functions required that a \code{data.sleep} object is used as this
+These functions require that a \code{data.sleep} object is used as this
 type of object contains the specific variable names to determine the daily
 windows of sleep, naps, work, and monitor wear.
 
@@ -62,6 +66,10 @@ missing date or time. It will prompt you with a question whether to proceed
 with processing the windows given a certain day has missing data. If it is
 known had of time that certain days will have invalid data the missing data
 may not be problem, as the invalid data will be excluded later.
+
+The \code{interval} parameter for \code{windows_nap} allows for recording two naps a
+day during the wear period. It is assumed the second napping intervals have
+variable names that end in \verb{_b#}, where \verb{#} denotes the wear day.
 }
 \examples{
 \dontrun{

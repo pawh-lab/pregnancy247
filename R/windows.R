@@ -6,8 +6,11 @@
 #' @name windows
 #'
 #' @param sleep A `data.sleep` object produced by [read_sleep()].
+#' @param interval For `windows_nap()`, a character taking a value of
+#' `"first"` or `"second"` to denote if first or second napping windows. Default
+#' is `"first"`.
 #'
-#' @details These functions required that a `data.sleep` object is used as this
+#' @details These functions require that a `data.sleep` object is used as this
 #' type of object contains the specific variable names to determine the daily
 #' windows of sleep, naps, work, and monitor wear.
 #'
@@ -39,6 +42,10 @@
 #' with processing the windows given a certain day has missing data. If it is
 #' known had of time that certain days will have invalid data the missing data
 #' may not be problem, as the invalid data will be excluded later.
+#'
+#' The `interval` parameter for `windows_nap` allows for recording two naps a
+#' day during the wear period. It is assumed the second napping intervals have
+#' variable names that end in `_b#`, where `#` denotes the wear day.
 #'
 #' @return A `list` containing two numeric vectors named `start` and `end` that
 #' are formatted as date-time (`POSIXct`) based on UTC time-zone.
