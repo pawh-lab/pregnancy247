@@ -316,11 +316,19 @@ windows_sleep <- function(sleep) {
 
 #' @rdname windows
 #' @export windows_nap
-windows_nap <- function(sleep) {
+windows_nap <- function(sleep, interval = "first") {
   # Checking parameter ####
   if (!("data.sleep" %in% class(sleep))) {
     stop("sleep must be a data.sleep object imported with read_sleep.")
   }
+
+  if (!(interval %in% c("first", "second"))) {
+    stop("interval must be a character with a value of first or second.")
+  }
+
+  # Switching interval to match variable names ####
+  interval <- ifelse(interval == "first", "", "b") # used for most
+  int <- ifelse(interval == "b", "_b", "") # needed for different names
 
   # Diary dates ####
   all_days <- 1:9
@@ -330,7 +338,8 @@ windows_nap <- function(sleep) {
   diary_dates <- diary_dates[na_dates]
 
   # Nap taken indicator ####
-  diary_nap <- unlist(sleep[1, grep("^diary_nap", colnames(sleep))])
+  nams <- grep(paste0("^diary_nap", int, "\\d"), colnames(sleep))
+  diary_nap <- unlist(sleep[1, nams])
   diary_nap <- as.integer(diary_nap[which(nchar(names(diary_nap)) == 10)])
   diary_nap <- diary_nap[na_dates]
 
@@ -340,22 +349,26 @@ windows_nap <- function(sleep) {
 
   ## Input ####
   ## How sleep windows should be defined
-  nap_start_input <- c(sleep[1, grep("^nap_start_input_", colnames(sleep))])
+  nams <- grep(paste0("^nap_start_input_", interval, "\\d"), colnames(sleep))
+  nap_start_input <- c(sleep[1, nams])
   nap_start_input <- nap_start_input[na_dates]
-  nap_end_input <- c(sleep[1, grep("^nap_end_input_", colnames(sleep))])
+  nams <- grep(paste0("^nap_end_input_", interval, "\\d"), colnames(sleep))
+  nap_end_input <- c(sleep[1, nams])
   nap_end_input <- nap_end_input[na_dates]
 
   ## Type of inputs ####
 
   ### Event marker ####
-  nap_start_marker <- c(sleep[1, grep("^nap_start_marker_", colnames(sleep))])
+  nams <- grep(paste0("^nap_start_marker_", interval, "\\d"), colnames(sleep))
+  nap_start_marker <- c(sleep[1, nams])
   nap_start_marker <- nap_start_marker[na_dates]
   nap_start_marker <- ifelse(
     nchar(nap_start_marker) <= 7,
     paste0("0", nap_start_marker),
     nap_start_marker
   )
-  nap_end_marker <- c(sleep[1, grep("^nap_end_marker_", colnames(sleep))])
+  nams <- grep(paste0("^nap_end_marker_", interval, "\\d"), colnames(sleep))
+  nap_end_marker <- c(sleep[1, nams])
   nap_end_marker <- nap_end_marker[na_dates]
   nap_end_marker <- ifelse(
     nchar(nap_end_marker) <= 7,
@@ -364,14 +377,16 @@ windows_nap <- function(sleep) {
   )
 
   ### Light ####
-  nap_start_light <- c(sleep[1, grep("^nap_start_light_", colnames(sleep))])
+  nams <- grep(paste0("^nap_start_light_", interval, "\\d"), colnames(sleep))
+  nap_start_light <- c(sleep[1, nams])
   nap_start_light <- nap_start_light[na_dates]
   nap_start_light <- ifelse(
     nchar(nap_start_light) <= 7,
     paste0("0", nap_start_light),
     nap_start_light
   )
-  nap_end_light <- c(sleep[1, grep("^nap_end_light_", colnames(sleep))])
+  nams <- grep(paste0("^nap_end_light_", interval, "\\d"), colnames(sleep))
+  nap_end_light <- c(sleep[1, nams])
   nap_end_light <- nap_end_light[na_dates]
   nap_end_light <- ifelse(
     nchar(nap_end_light) <= 7,
@@ -379,14 +394,16 @@ windows_nap <- function(sleep) {
     nap_end_light
   )
   ### Activity ####
-  nap_start_activity <- c(sleep[1, grep("^nap_start_activity_", colnames(sleep))]) #nolint
+  nams <- grep(paste0("^nap_start_activity_", interval, "\\d"), colnames(sleep))
+  nap_start_activity <- c(sleep[1, nams])
   nap_start_activity <- nap_start_activity[na_dates]
   nap_start_activity <- ifelse(
     nchar(nap_start_activity) <= 7,
     paste0("0", nap_start_activity),
     nap_start_activity
   )
-  nap_end_activity <- c(sleep[1, grep("^nap_end_activity_", colnames(sleep))])
+  nams <- grep(paste0("^nap_end_activity_", interval, "\\d"), colnames(sleep))
+  nap_end_activity <- c(sleep[1, nams])
   nap_end_activity <- nap_end_activity[na_dates]
   nap_end_activity <- ifelse(
     nchar(nap_end_activity) <= 7,
@@ -395,7 +412,8 @@ windows_nap <- function(sleep) {
   )
 
   ### Diary ####
-  nap_start_diary <- c(sleep[1, grep("^diary_napstrt", colnames(sleep))])
+  nams <- grep(paste0("^diary_napstrt", int, "\\d"), colnames(sleep))
+  nap_start_diary <- c(sleep[1, nams])
   nap_start_diary <- nap_start_diary[na_dates]
   hold1 <- nchar(nap_start_diary) == 4 & substr(nap_start_diary, 2, 2) %in% c(":", ";") #nolint
   hold2 <- nchar(nap_start_diary) == 5 & substr(nap_start_diary, 3, 3) %in% c(":", ";") #nolint
@@ -409,7 +427,8 @@ windows_nap <- function(sleep) {
     paste0("0", nap_start_diary),
     nap_start_diary
   )
-  nap_end_diary <- c(sleep[1, grep("^diary_napend", colnames(sleep))])
+  nams <- grep(paste0("^diary_napend", int, "\\d"), colnames(sleep))
+  nap_end_diary <- c(sleep[1, nams])
   nap_end_diary <- nap_end_diary[na_dates]
   hold1 <- nchar(nap_end_diary) == 4 & substr(nap_end_diary, 2, 2) %in% c(":", ";") #nolint
   hold2 <- nchar(nap_end_diary) == 5 & substr(nap_end_diary, 3, 3) %in% c(":", ";") #nolint
