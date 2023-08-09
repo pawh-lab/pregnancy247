@@ -347,7 +347,7 @@ windows_nap <- function(sleep, interval = "first") {
   # Nap taken indicator ####
   nams <- grep(paste0("^diary_nap", int, "\\d"), colnames(sleep))
   diary_nap <- unlist(sleep[1, nams])
-  diary_nap <- as.integer(diary_nap[which(nchar(names(diary_nap)) == 10)])
+  diary_nap <- as.integer(diary_nap)
   diary_nap <- diary_nap[na_dates]
 
   # Nap inputs ####
