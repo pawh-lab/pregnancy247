@@ -25,3 +25,7 @@ Imports:
     readxl,
     tidyr,
     utils
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
