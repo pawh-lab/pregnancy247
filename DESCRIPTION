@@ -22,7 +22,6 @@ Imports:
     grDevices,
     lubridate,
     readr,
-    readxl,
     tidyr,
     utils
 Suggests: 
