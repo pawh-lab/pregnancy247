@@ -145,8 +145,11 @@ write_all_avgs <- function(x, subject, trimester, file = NULL, ...) {
           file = "./DATA_Iowa_activPAL/weekly_avgs_IOWA.csv",
           stringsAsFactors = FALSE
         )
-        hold <- paste0(temp$subject_id, temp$trimester)
-        temp <- subset(temp, subset = hold != paste0(subject, trimester))
+        hold <- paste0(subject, trimester)
+        temp <- subset(
+          x = temp,
+          subset = paste0(temp$subject_id, temp$trimester) != hold
+        )
         temp <- dplyr::bind_rows(temp, x)
         temp <- temp[order(temp$subject_id, temp$trimester), ]
         readr::write_csv(
@@ -167,8 +170,11 @@ write_all_avgs <- function(x, subject, trimester, file = NULL, ...) {
           file = "./DATA_Pitt_activPAL/weekly_avgs_PITT.csv",
           stringsAsFactors = FALSE
         )
-        hold <- paste0(temp$subject_id, temp$trimester)
-        temp <- subset(temp, subset = hold != paste0(subject, trimester))
+        hold <- paste0(subject, trimester)
+        temp <- subset(
+          x = temp,
+          subset = paste0(temp$subject_id, temp$trimester) != hold
+        )
         temp <- dplyr::bind_rows(temp, x)
         temp <- temp[order(temp$subject_id, temp$trimester), ]
         readr::write_csv(
@@ -189,8 +195,11 @@ write_all_avgs <- function(x, subject, trimester, file = NULL, ...) {
           file = "./DATA_WVU_activPAL/weekly_avgs_WVU.csv",
           stringsAsFactors = FALSE
         )
-        hold <- paste0(temp$subject_id, temp$trimester)
-        temp <- subset(temp, subset = hold != paste0(subject, trimester))
+        hold <- paste0(subject, trimester)
+        temp <- subset(
+          x = temp,
+          subset = paste0(temp$subject_id, temp$trimester) != hold
+        )
         temp <- dplyr::bind_rows(temp, x)
         temp <- temp[order(temp$subject_id, temp$trimester), ]
         readr::write_csv(
@@ -208,25 +217,28 @@ write_all_avgs <- function(x, subject, trimester, file = NULL, ...) {
     }
   } else {
     if (file.exists(file)) {
-        temp <- utils::read.csv(
-          file = file,
-          stringsAsFactors = FALSE
-        )
-        hold <- paste0(temp$subject_id, temp$trimester)
-        temp <- subset(temp, subset = hold != paste0(subject, trimester))
-        temp <- dplyr::bind_rows(temp, x)
-        temp <- temp[order(temp$subject_id, temp$trimester), ]
-        readr::write_csv(
-          x = temp,
-          file = file,
-          na = "", ...
-        )
-      } else {
-        readr::write_csv(
-          x = x,
-          file = file,
-          na = "", ...
-        )
-      }
+      temp <- utils::read.csv(
+        file = file,
+        stringsAsFactors = FALSE
+      )
+      hold <- paste0(subject, trimester)
+      temp <- subset(
+        x = temp,
+        subset = paste0(temp$subject_id, temp$trimester) != hold
+      )
+      temp <- dplyr::bind_rows(temp, x)
+      temp <- temp[order(temp$subject_id, temp$trimester), ]
+      readr::write_csv(
+        x = temp,
+        file = file,
+        na = "", ...
+      )
+    } else {
+      readr::write_csv(
+        x = x,
+        file = file,
+        na = "", ...
+      )
+    }
   }
 }
