@@ -4,3 +4,4 @@ inst/extdata/*.xlsx
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^\.github$
