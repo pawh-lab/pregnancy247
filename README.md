@@ -23,9 +23,10 @@ remotes::install_github("deboonstra/pregnancy247")
 ```
 
 There is an added installation call to a package called
-`activpalProcessing` because this package is no longer available on
-`CRAN` and an archived copy of this package is used. So, it must be
-installed prior to installing `pregnancy247`.
+[`activpalProcessing`](https://github.com/deboonstra/activpalProcessing)
+because this package is no longer available on `CRAN` and an archived
+copy of this package is used. So, it must be installed prior to
+installing `pregnancy247`.
 
 # Useage
 
