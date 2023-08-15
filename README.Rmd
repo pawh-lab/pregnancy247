@@ -37,6 +37,10 @@ There is an added installation call to a package called `activpalProcessing` bec
 
 This package has two unique selections of functions based on the different needs of the Pregnancy 24/7 study team. 
 
+```{r}
+library(pregnancy247)
+```
+
 ### Actiwatch data quality check
 The first selection includes the
 

@@ -35,6 +35,10 @@ installed prior to installing `pregnancy247`.
 This package has two unique selections of functions based on the
 different needs of the Pregnancy 24/7 study team.
 
+``` r
+library(pregnancy247)
+```
+
 ### Actiwatch data quality check
 
 The first selection includes the
