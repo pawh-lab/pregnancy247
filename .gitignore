@@ -2,3 +2,4 @@
 **/*.RData
 .DS_store
 inst/doc
+docs

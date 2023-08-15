@@ -1,3 +1,6 @@
 ^LICENSE\.md$
 ^README\.Rmd$
 inst/extdata/*.xlsx
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
