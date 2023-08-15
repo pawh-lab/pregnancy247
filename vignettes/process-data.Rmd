@@ -18,13 +18,7 @@ knitr::opts_chunk$set(
 
 The goal of `process_data()` is process the Actiwatch, sleep diary, and activPAL data for the Pregnancy 24/7 study. This document will provide an overview of how to use `process_data()` appropriately based on the Pregnancy 24/7 study and data structures.
 
-# Manual of operations for version
-
-```{r}
-packageVersion("pregnancy247")
-```
-
-## Load the package
+# Load the package
 To process the Actiwatch, sleep diary, and activPAL data to the specifications of the study use the `library()` command to load the `pregnancy247` package, as shown below.
 
 ```{r}
@@ -33,7 +27,7 @@ library(pregnancy247)
 
 This allows the user to access all of the available functions present in the package, such as `process_data()`, without a direct reference to the functions, `pregnancy247::process_data()`.
 
-## Set the working directory
+# Set the working directory
 The `process_data()` function, which uses the `read_sleep()`, `read_events()`, `save_plot_1s_plot`, and all `write` functions, requires that the working directory is set to the directory containing the
 
 - `DATA_Iowa_activPAL`,
@@ -46,7 +40,7 @@ sub-directories with subject-specific directories within each sub-directory. Add
 2. Navigate to *Choose Directory ...* listed within *Set Working Directory*
 3. Navigate the file explorer to the main data processing folder, which for the Pregnancy 24/7 is `rdss_kawhitaker/Pregnancy247/ActivPAL Processing`
 
-## Process data
+# Process data
 To process the Actiwatch, sleep diary, and activPAL data for a *single subject*, the `process_data()` will be used. This function takes a few arguments that are listed below. Once the arguments are specified, all one needs to do is execute the function call. This will depend on your operating system.
 
 ```{r eval = FALSE}
@@ -64,7 +58,7 @@ The `subject` and `trimester` parameters allow the activPAL data to imported by 
   - Once the data processing beings, there is the potiential for the processing to stop if a missing sleep, nap, work, or monitor time appears. A diaglog box will present itself when this occurs. The box will read as *Day j has a missing (sleep/nap/work/monitor) time. Would you like to stop processing?* Usually, processing is stopped if an investigation of why a time is missing is needed. If the data processor is aware of this missing time and would like to continue processing the data, then answer *No*.
   - The processing may also stop if the subject is a shift-worker and does not sleep during one of the wear days. If the subject does not sleep for a day, stop the data processing and add in a sleep interval of 1 minute on the day of no sleep in the sleep diary. Then, process the data again and do **NOT** stop the data processing due to the subject being a shift-worker.
 
-## Outputted data sets
+# Outputted data sets
 The entire creation of this function depends on the other functions in the `pregnancy247` package. There is no `R` object returned by this function, but files are written to their appropriate subject-specific directories based on the `subject` and `trimester` parameters. A total of six data objects will be exported.
 
 - *Events data* are a collection of all the activity event that occurred during the wear period. Additionally, indicator variables are created to denote sleep, naps, and work times. These variables are named `sleep_loop`, `nap_loop`, and `work_loop`. The `wear_day` variables denotes the day during the wear period, where each wear day begins with a sleep window. Thus, the second wear day begins when the subject goes to after day 1. The outputted data set is named `####-ab(t)_eventfile.csv`, with `(t)` denoting the trimester of pregnancy.

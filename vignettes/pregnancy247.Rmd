@@ -1,8 +1,8 @@
 ---
-title: "pregnancy247"
+title: "Getting started"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{pregnancy247}
+  %\VignetteIndexEntry{Getting started}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -13,9 +13,6 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
-# Goals
-The goal of `pregnancy247` is to process and check the raw sleep diary, Actiwatch, and activPAL data for [The University of Iowa Pregnancy 24/7](https://clinicaltrials.uihealthcare.org/studies/pregnancy-247) research study conducted by [Kara Whitaker](https://clas.uiowa.edu/hhp/people/kara-m-whitaker).
 
 # Installation
 
