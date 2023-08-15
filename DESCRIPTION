@@ -22,7 +22,9 @@ Imports:
     grDevices,
     lubridate,
     readr,
+    stats,
     tidyr,
+    time,
     utils
 Suggests: 
     knitr,
