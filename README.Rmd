@@ -13,15 +13,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-# pregnancy247
-
 <!-- badges: start -->
 <!-- badges: end -->
 
-## Goals
+# Goals
 The goal of `pregnancy247` is to process and check the raw sleep diary, Actiwatch, and activPAL data for [The University of Iowa Pregnancy 24/7](https://clinicaltrials.uihealthcare.org/studies/pregnancy-247) research study conducted by [Kara Whitaker](https://clas.uiowa.edu/hhp/people/kara-m-whitaker).
 
-## Installation
+# Installation
 
 You can install the development version of pregnancy247 from [GitHub](https://github.com/) with:
 
@@ -33,7 +31,7 @@ remotes::install_github("deboonstra/pregnancy247")
 
 There is an added installation call to a package called `activpalProcessing` because this package is no longer available on `CRAN` and an archived copy of this package is used. So, it must be installed prior to installing `pregnancy247`.
 
-## Useage
+# Useage
 
 This package has two unique selections of functions based on the different needs of the Pregnancy 24/7 study team. 
 
@@ -41,7 +39,7 @@ This package has two unique selections of functions based on the different needs
 library(pregnancy247)
 ```
 
-### Actiwatch data quality check
+## Actiwatch data quality check
 The first selection includes the
 
 - `read_msleep`,
@@ -62,7 +60,7 @@ Currently, to check the Actiwatch data appropriately, the working directory must
 - `Visit 2`, and
 - `Visit 3`
 
-### Actiwatch, activPAL, and diary data processing 
+## Actiwatch, activPAL, and diary data processing 
 The second selection of functions includes the remaining functions not listed above to process the Actiwatch, activPAL, and diary data. The `process_data()` function provides the main interface to the other functions based on the needs of the Pregnancy 24/7 study. An example of the utility of this interface is presented below.
 
 ```{r eval = FALSE}

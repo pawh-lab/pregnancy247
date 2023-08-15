@@ -1,12 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# pregnancy247
-
 <!-- badges: start -->
 <!-- badges: end -->
 
-## Goals
+# Goals
 
 The goal of `pregnancy247` is to process and check the raw sleep diary,
 Actiwatch, and activPAL data for [The University of Iowa Pregnancy
@@ -14,7 +11,7 @@ Actiwatch, and activPAL data for [The University of Iowa Pregnancy
 research study conducted by [Kara
 Whitaker](https://clas.uiowa.edu/hhp/people/kara-m-whitaker).
 
-## Installation
+# Installation
 
 You can install the development version of pregnancy247 from
 [GitHub](https://github.com/) with:
@@ -30,7 +27,7 @@ There is an added installation call to a package called
 `CRAN` and an archived copy of this package is used. So, it must be
 installed prior to installing `pregnancy247`.
 
-## Useage
+# Useage
 
 This package has two unique selections of functions based on the
 different needs of the Pregnancy 24/7 study team.
@@ -39,7 +36,7 @@ different needs of the Pregnancy 24/7 study team.
 library(pregnancy247)
 ```
 
-### Actiwatch data quality check
+## Actiwatch data quality check
 
 The first selection includes the
 
@@ -69,7 +66,7 @@ names of the folders in subject-specific directories are
 - `Visit 2`, and
 - `Visit 3`
 
-### Actiwatch, activPAL, and diary data processing
+## Actiwatch, activPAL, and diary data processing
 
 The second selection of functions includes the remaining functions not
 listed above to process the Actiwatch, activPAL, and diary data. The
