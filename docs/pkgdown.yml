@@ -1,0 +1,8 @@
+pandoc: '3.1'
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  pregnancy247: pregnancy247.html
+  process-data: process-data.html
+last_built: 2023-08-15T22:21Z
+
