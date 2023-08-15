@@ -73,4 +73,4 @@ The entire creation of this function depends on the other functions in the `preg
 - *Weekly averages data* are weekly averages of the movement and sedentary metrics during the wear period. Only the days that resulted in 10 hours or more of wear time are included in these averages. The outputted data set is named `####-ab(t)_weekly_avgs.csv`, with `(t)` denoting the trimester of pregnancy. Additionally, the weekly averages are included in a site-specific data set of weekly movement and sedentary metrics. These data sets are `weekly_avgs_IOWA.csv` for the University of Iowa, `weekly_avgs_PITT.csv` for the University of Pittsburgh, and `weekly_avgs_WVU.csv` for West Virgina University.
 - *Graph* of wear day activity saved as a PDF. The outputted data set is named `####-ab(t)_graph.pdf`, with `(t)` denoting the trimester of pregnancy.
 
-The data dictionaries for these data sets may be found in `inst/extdata`.
+The data dictionaries for these data sets may be found in [`inst/extdata`](https://github.com/deboonstra/pregnancy247/tree/main/inst/extdata) of the package [Github](https://github.com/deboonstra/pregnancy247/tree/main).
