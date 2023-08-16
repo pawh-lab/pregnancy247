@@ -87,7 +87,8 @@ study and data structures.</p>
 </h2>
 <p>To process the Actiwatch, sleep diary, and activPAL data to the
 specifications of the study use the <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code> command to
-load the <code>pregnancy247</code> package, as shown below.</p>
+load the <a href="https://deboonstra.github.io/pregnancy247/articles/pregnancy247.html"><code>pregnancy247</code></a>
+package, as shown below.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://deboonstra.github.io/pregnancy247/">pregnancy247</a></span><span class="op">)</span></span></code></pre></div>
 <p>This allows the user to access all of the available functions present
@@ -100,9 +101,9 @@ reference to the functions,
 </h2>
 <p>The <code><a href="../reference/process_data.html">process_data()</a></code> function, which uses the
 <code><a href="../reference/read_sleep.html">read_sleep()</a></code>, <code><a href="../reference/read_events.html">read_events()</a></code>,
-<code>save_plot_1s_plot</code>, and all <code>write</code> functions,
-requires that the working directory is set to the directory containing
-the</p>
+<code>save_plot_1s_plot()</code>, and all <code><a href="../reference/write.html">write()</a></code>
+functions, requires that the working directory is set to the directory
+containing the</p>
 <ul>
 <li>
 <code>DATA_Iowa_activPAL</code>,</li>
@@ -113,9 +114,9 @@ the</p>
 <p>sub-directories with subject-specific directories within each
 sub-directory. Additionally, it also assumes that each visit during the
 study period is the concatenation of the subject ID and trimester. The
-requirement of the work directory and file system is based on the needs
-of Pregnancy 24/7. Thus, to alter this requirement adjust the
-dependencies of the file system in the read and write functions. If <a href="https://posit.co/products/open-source/rstudio/" class="external-link">RStdio</a> is
+requirement of the working directory and file system is based on the
+needs of Pregnancy 24/7. Thus, to alter this requirement adjust the
+dependencies of the file system in the read and write functions. If <a href="https://posit.co/products/open-source/rstudio/" class="external-link">RStudio</a> is
 being used, the working directory may be set by the following.</p>
 <ol style="list-style-type: decimal">
 <li>Select the <em>Session</em> tab in the toolbar</li>
@@ -168,10 +169,10 @@ logical value with the default being <code>TRUE</code>.
 processing to stop if a missing sleep, nap, work, or monitor time
 appears. A diaglog box will present itself when this occurs. The box
 will read as <em>Day j has a missing (sleep/nap/work/monitor) time.
-Would you like to stop processing?</em> Usually, processing is stopped
-if an investigation of why a time is missing is needed. If the data
-processor is aware of this missing time and would like to continue
-processing the data, then answer <em>No</em>.</li>
+Would you like to stop processing?</em> for <span class="math inline">\(j = 1, 2, \ldots, 9\)</span>. Usually, processing
+is stopped if an investigation of why a time is missing is needed. If
+the data processor is aware of this missing time and would like to
+continue processing the data, then answer <em>No</em>.</li>
 <li>The processing may also stop if the subject is a shift-worker and
 does not sleep during one of the wear days. If the subject does not
 sleep for a day, stop the data processing and add in a sleep interval of
@@ -193,35 +194,36 @@ appropriate subject-specific directories based on the
 six data objects will be exported.</p>
 <ul>
 <li>
-<em>Events data</em> are a collection of all the activity event that
-occurred during the wear period. Additionally, indicator variables are
-created to denote sleep, naps, and work times. These variables are named
-<code>sleep_loop</code>, <code>nap_loop</code>, and
-<code>work_loop</code>. The <code>wear_day</code> variables denotes the
+<strong>Events data</strong> is the collection of all the activity
+events that occurred during the wear period. Additionally, indicator
+variables are created to denote sleep, naps, and work times. These
+variables are named <code>sleep_loop</code>, <code>nap_loop</code>, and
+<code>work_loop</code>. The <code>wear_day</code> variable denotes the
 day during the wear period, where each wear day begins with a sleep
-window. Thus, the second wear day begins when the subject goes to after
-day 1. The outputted data set is named
+window. Thus, the second wear day begins when the subject goes to sleep
+after day 1. The outputted data set is named
 <code>####-ab(t)_eventfile.csv</code>, with <code>(t)</code> denoting
 the trimester of pregnancy.</li>
 <li>
-<em>One second EPOCH data</em> are an expanded version of the events
-data to a second by second accounting of activity during the wear
+<strong>One second EPOCH data</strong> is an expanded version of the
+events data to a second by second accounting of activity during the wear
 period. The outputted data set is named
 <code>####-ab(t)_1secepoch.csv</code>, with <code>(t)</code> denoting
 the trimester of pregnancy.</li>
 <li>
-<em>Daily values data</em> are a collection of daily movement and
-sedentary metrics. These values are calculated using the archived <a href="https://github.com/deboonstra/activpalProcessing" class="external-link"><code>activpalProcessing</code></a>
+<strong>Daily values data</strong> is the collection of daily
+movement and sedentary metrics. These values are calculated using the
+archived <a href="https://github.com/deboonstra/activpalProcessing" class="external-link"><code>activpalProcessing</code></a>
 package. By default, days 1 and 9 should not be used for further
-activity analysis. However, if one of the other wear days have less than
+activity analysis. However, if one of the other wear days has less than
 10 hours of activPAL wear, day 1 may be considered for analysis if it
 has at least 10 hours of wear. The outputted data set is named
 <code>####-ab(t)_daily_values.csv</code>, with <code>(t)</code> denoting
 the trimester of pregnancy.</li>
 <li>
-<em>Weekly averages data</em> are weekly averages of the movement
-and sedentary metrics during the wear period. Only the days that
-resulted in 10 hours or more of wear time are included in these
+<strong>Weekly averages data</strong> is the weekly averages of the
+movement and sedentary metrics during the wear period. Only the days
+that resulted in 10 hours or more of wear time are included in these
 averages. The outputted data set is named
 <code>####-ab(t)_weekly_avgs.csv</code>, with <code>(t)</code> denoting
 the trimester of pregnancy. Additionally, the weekly averages are
@@ -231,11 +233,11 @@ University of Iowa, <code>weekly_avgs_PITT.csv</code> for the University
 of Pittsburgh, and <code>weekly_avgs_WVU.csv</code> for West Virgina
 University.</li>
 <li>
-<em>Graph</em> of wear day activity saved as a PDF. The outputted
-data set is named <code>####-ab(t)_graph.pdf</code>, with
+<strong>Graph</strong> of wear day activity saved as a PDF. The
+outputted data set is named <code>####-ab(t)_graph.pdf</code>, with
 <code>(t)</code> denoting the trimester of pregnancy.</li>
 </ul>
-<p>The data dictionaries for these data sets may be found in <a href="https://github.com/deboonstra/pregnancy247/tree/main/inst/extdata" class="external-link"><code>inst/extdata</code></a>
+<p>The data dictionaries for these data sets may be downloaded from <a href="https://github.com/deboonstra/pregnancy247/tree/main/inst/extdata" class="external-link"><code>inst/extdata</code></a>
 of the package <a href="https://github.com/deboonstra/pregnancy247/tree/main" class="external-link">Github</a>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
