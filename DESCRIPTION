@@ -1,7 +1,7 @@
 Package: pregnancy247
 Title: Data procressing for the Pregnancy 24/7 study
 Version: 0.0.0.9
-Date: 2023-08-05
+Date: 2023-08-16
 Authors@R: 
   person(
     "D. Erik", "Boonstra", role = c("aut", "cre"),
@@ -14,8 +14,7 @@ Encoding: UTF-8
 Language: es
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-Imports: 
-    activpalProcessing,
+Imports:
     dplyr,
     ggplot2,
     graphics,
@@ -25,6 +24,7 @@ Imports:
     stats,
     tidyr,
     utils
+Remotes: activpalProcessing@1.0.2
 Suggests: 
     knitr,
     rmarkdown
