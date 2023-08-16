@@ -133,9 +133,9 @@ for the Pregnancy 24/7 is
 <h2 id="process-data">Process data<a class="anchor" aria-label="anchor" href="#process-data"></a>
 </h2>
 <p>To process the Actiwatch, sleep diary, and activPAL data for a
-<em>single subject</em>, the <code><a href="../reference/process_data.html">process_data()</a></code> will be used.
-This function takes a few arguments that are listed below. Once the
-arguments are specified, all one needs to do is execute the function
+<em>single subject</em>, the <code><a href="../reference/process_data.html">process_data()</a></code> function will
+be used. This function takes a few arguments that are listed below. Once
+the arguments are specified, all one needs to do is execute the function
 call. This will depend on your operating system.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/process_data.html">process_data</a></span><span class="op">(</span>subject <span class="op">=</span> <span class="st">"1000-AB"</span>, trimester <span class="op">=</span> <span class="fl">1</span>, sleep_source <span class="op">=</span> <span class="st">"./sleep.csv"</span><span class="op">)</span></span></code></pre></div>
@@ -146,7 +146,7 @@ the activPAL data to imported by <code><a href="../reference/read_events.html">r
 <code>subject</code> denotes the study subject whose data is to be
 processed and should be listed as <code>####-ab</code>.</li>
 <li>
-<code>trimester</code> denotes the pregnancy trimestery of the study
+<code>trimester</code> denotes the pregnancy trimester of the study
 subject during the data collection period.</li>
 <li>
 <code>sleep_source</code> is the file name that contains the current
@@ -184,17 +184,40 @@ the subject being a shift-worker.</li>
 </ul>
 <p>The data dictionary for the <code>sleep_source</code> data set may be
 downloaded from <a href="https://github.com/deboonstra/pregnancy247/blob/main/inst/extdata/Pregnancy247SleepDatabase_DataDictionary_2023-08-16.csv" class="external-link"><code>inst/extdata</code></a>
-of the package <a href="https://github.com/deboonstra/pregnancy247/tree/main" class="external-link">Github</a></p>
+of the <a href="https://github.com/deboonstra/pregnancy247/tree/main" class="external-link">Github</a>
+site for the package.</p>
 </div>
 <div class="section level2">
 <h2 id="outputted-data-sets">Outputted data sets<a class="anchor" aria-label="anchor" href="#outputted-data-sets"></a>
 </h2>
-<p>The entire creation of this function depends on the other functions
-in the <code>pregnancy247</code> package. There is no <code>R</code>
-object returned by this function, but files are written to their
-appropriate subject-specific directories based on the
-<code>subject</code> and <code>trimester</code> parameters. A total of
-six data objects will be exported.</p>
+<p>The entire creation of <code><a href="../reference/process_data.html">process_data()</a></code> depends on the</p>
+<ul>
+<li>
+<code><a href="../reference/check_dir.html">check_dir()</a></code>,</li>
+<li>
+<code><a href="../reference/read_sleep.html">read_sleep()</a></code>,</li>
+<li>
+<code><a href="../reference/read_events.html">read_events()</a></code>,</li>
+<li>
+<code><a href="../reference/windows.html">windows()</a></code>,</li>
+<li>
+<code><a href="../reference/process_events.html">process_events()</a></code>,</li>
+<li>
+<code><a href="../reference/merge_events.html">merge_events()</a></code>,</li>
+<li>
+<code><a href="../reference/create_1s_epoch.html">create_1s_epoch()</a></code>,</li>
+<li>
+<code><a href="../reference/plot_1s_epoch.html">plot_1s_epoch()</a></code>,</li>
+<li>
+<code><a href="../reference/summarize_daily.html">summarize_daily()</a></code>, and</li>
+<li><code><a href="../reference/write.html">write()</a></code></li>
+</ul>
+<p>functions in the <a href="https://github.com/deboonstra/pregnancy247/tree/main/R" class="external-link"><code>pregnancy247/R</code></a>
+package. There is no <code>R</code> object returned by this function,
+but files are written to their appropriate subject-specific directories
+based on the <code>subject</code> and <code>trimester</code> parameters.
+A total of six data objects will be exported and the description of
+these data sets are presented below.</p>
 <ul>
 <li>
 <strong>Events data</strong> is the collection of all the activity
@@ -236,15 +259,15 @@ University of Iowa, <code>weekly_avgs_PITT.csv</code> for the University
 of Pittsburgh, and <code>weekly_avgs_WVU.csv</code> for West Virgina
 University.</li>
 <li>
-<strong>Graph</strong> of wear day activity saved as a PDF. The
+<strong>Graph</strong> of wear day activity is saved as a PDF. The
 outputted data set is named <code>####-ab(t)_graph.pdf</code>, with
 <code>(t)</code> denoting the trimester of pregnancy.</li>
 </ul>
 <p>The data dictionaries for these outputted data sets may be downloaded
 from <a href="https://github.com/deboonstra/pregnancy247/tree/main/inst/extdata" class="external-link"><code>inst/extdata</code></a>
-of the package <a href="https://github.com/deboonstra/pregnancy247/tree/main" class="external-link">Github</a>.
-The file names of the dictionaries are related to the outputted data
-sets.</p>
+of the <a href="https://github.com/deboonstra/pregnancy247/tree/main" class="external-link">Github</a>
+site for the package. The file names of the dictionaries are related to
+the outputted data sets.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
