@@ -1,0 +1,41 @@
+---
+title: "Actiwatch data quality check"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Actiwatch data quality check}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Goal
+
+The goal of `quality_check()` is screen the recorded Actiwatch data and flag outlying values that require further investigation. This document will provide an overview of how to use `quality_check()` appropriately based on the Pregnancy 24/7 study and data structures.
+
+# Load the package
+To screen the Actiwatch data to the specifications of the study, use the `library()` command to load the [`pregnancy247`](https://deboonstra.github.io/pregnancy247/articles/pregnancy247.html) package, as shown below.
+
+```{r}
+library(pregnancy247)
+```
+
+This allows the user to access all of the available functions present in the package, such as `quality_check()`, without a direct reference to the functions, `pregnancy247::quality_check()`.
+
+# Set the working directory
+The `quality_check()` function uses the `read_msleep()`, `check_msleep()`, `write_msleep()`, and `write_all_msleep()` functions, and requires that the working directory is set to the directory containing the data of each subject within subject-specific folders based on IDs. It is also assumed the names of the folders in subject-specific directories are
+
+- `Visit 1`,
+- `Visit 2`, and
+- `Visit 3`.
+
+The requirement of the working directory and file system is based on the needs of the Pregnancy 24/7 study team located at the University of Pittsburgh. Thus, to alter this requirement adjust the dependencies of the file system in the read and write functions. If [RStudio](https://posit.co/products/open-source/rstudio/) is being used, the working directory may be set by the following.
+
+1. Select the *Session* tab in the toolbar
+2. Navigate to *Choose Directory ...* listed within *Set Working Directory*
+3. Navigate the file explorer to the main data processing folder
