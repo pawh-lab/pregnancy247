@@ -45,6 +45,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/process-data.html">Process data for the Pregnancy 24/7 study</a>
+    <a class="dropdown-item" href="../articles/quality-check.html">Actiwatch data quality check</a>
   </div>
 </li>
       </ul>
@@ -88,7 +89,7 @@ An archived copy of this package is used. So, <a href="https://github.com/deboon
 must be installed prior to installing <a href="https://github.com/deboonstra/pregnancy247" class="external-link"><code>pregnancy247</code></a>.</p>
 </div>
 <div class="section level2">
-<h2 id="useage">Useage<a class="anchor" aria-label="anchor" href="#useage"></a>
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
 <p>This package has two unique selections of functions based on the
 different needs of the Pregnancy 24/7 study team.</p>
@@ -150,9 +151,12 @@ working directory set the directory containing the</p>
 <code>DATA_Pitt_activPAL</code>, and</li>
 <li><code>DATA_WVU_activPAL</code></li>
 </ul>
-<p>sub-directories of data. If you are viewing the package as a basis of
-code for your own research study, you will need to make changes to how
-the functions depend on your file system.</p>
+<p>sub-directories of data with subject-specific directories within each
+sub-directory. Additionally, it also assumes that each visit during the
+study period is the concatenation of the subject ID and trimester. If
+you are viewing the package as a basis of code for your own research
+study, you will need to make changes to how the functions depend on your
+file system.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
