@@ -68,4 +68,4 @@ Currently, to process these data appropriately, you need to have your working di
 - `DATA_Pitt_activPAL`, and
 - `DATA_WVU_activPAL`
 
-sub-directories of data. If you are viewing the package as a basis of code for your own research study, you will need to make changes to how the functions depend on your file system.
+sub-directories of data with subject-specific directories within each sub-directory. Additionally, it also assumes that each visit during the study period is the concatenation of the subject ID and trimester. If you are viewing the package as a basis of code for your own research study, you will need to make changes to how the functions depend on your file system.
