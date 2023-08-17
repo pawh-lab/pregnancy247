@@ -8,8 +8,8 @@
 The goal of [`pregnancy247`](https://github.com/deboonstra/pregnancy247)
 is to process and check the raw sleep diary, Actiwatch, and activPAL
 data for [The University of Iowa Pregnancy
-24/7](https://clinicaltrials.uihealthcare.org/studies/pregnancy-247)
-research study conducted by [Kara
+24/7](https://clinicaltrials.gov/study/NCT04749849) research study
+conducted by [Kara
 Whitaker](https://clas.uiowa.edu/hhp/people/kara-m-whitaker).
 
 ## Installation
@@ -33,7 +33,7 @@ An archived copy of this package is used. So,
 must be installed prior to installing
 [`pregnancy247`](https://github.com/deboonstra/pregnancy247).
 
-## Useage
+## Usage
 
 This package has two unique selections of functions based on the
 different needs of the Pregnancy 24/7 study team.
