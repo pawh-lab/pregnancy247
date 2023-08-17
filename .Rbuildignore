@@ -1,6 +1,6 @@
 ^LICENSE\.md$
 ^README\.Rmd$
-inst/extdata/outdata/*.csv
+inst/extdata/outdata/*.xlsx
 inst/extdata/*.csv
 ^_pkgdown\.yml$
 ^docs$
