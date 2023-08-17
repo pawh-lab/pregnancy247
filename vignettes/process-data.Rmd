@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 # Goal
 
-The goal of `process_data()` is process the Actiwatch, sleep diary, and activPAL data for the Pregnancy 24/7 study. This document will provide an overview of how to use `process_data()` appropriately based on the Pregnancy 24/7 study and data structures.
+The goal of the `process_data()` function is to process the Actiwatch, sleep diary, and activPAL data for the Pregnancy 24/7 study. This document will provide an overview of how to use `process_data()` appropriately based on the Pregnancy 24/7 study and data structures.
 
 # Load the package
 Assuming the [`pregnancy247`](https://deboonstra.github.io/pregnancy247/articles/pregnancy247.html) package is [installed](https://deboonstra.github.io/pregnancy247/articles/pregnancy247.html#installation), use the `library()` command to load the [`pregnancy247`](https://deboonstra.github.io/pregnancy247/articles/pregnancy247.html) package, as shown below, to process the Actiwatch, sleep diary, and activPAL data to the specifications of the study.
@@ -28,7 +28,7 @@ library(pregnancy247)
 This allows the user to access all of the available functions present in the package, such as `process_data()`, without a direct reference to the functions, `pregnancy247::process_data()`.
 
 # Set the working directory
-The `process_data()` function, which uses the `read_sleep()`, `read_events()`, `save_plot_1s_plot()`, and all `write()` functions, requires that the working directory is set to the directory containing the
+The `process_data()` function uses the `read_sleep()`, `read_events()`, `save_plot_1s_plot()`, and all `write()` functions, which all require the working directory is set to the directory containing the
 
 - `DATA_Iowa_activPAL`,
 - `DATA_Pitt_activPAL`, and
@@ -41,7 +41,7 @@ sub-directories with subject-specific directories within each sub-directory. Add
 3. Navigate the file explorer to the main data processing folder, which for the Pregnancy 24/7 is `rdss_kawhitaker/Pregnancy247/ActivPAL Processing`
 
 # Process data
-To process the Actiwatch, sleep diary, and activPAL data for a *single subject*, the `process_data()` function will be used. This function takes a few arguments that are listed below. Once the arguments are specified, all one needs to do is execute the function call. This will depend on your operating system.
+The Actiwatch, sleep diary, and activPAL data are processed for a *single subject* at a time with the `process_data()` function. This function takes a few arguments that are listed below. Once the arguments are specified, all one needs to do is execute the function call. This will depend on your operating system.
 
 ```{r eval = FALSE}
 process_data(subject = "1000-AB", trimester = 1, sleep_source = "./sleep.csv")
@@ -74,13 +74,13 @@ The entire creation of `process_data()` depends on the
 - `summarize_daily()`, and
 - `write()`
 
-functions in the [`pregnancy247/R`](https://github.com/deboonstra/pregnancy247/tree/main/R) package. There is no `R` object returned by this function, but files are written to their appropriate subject-specific directories based on the `subject` and `trimester` parameters. A total of six data objects will be exported and the description of these data sets are presented below.
+functions in the [`pregnancy247/R`](https://github.com/deboonstra/pregnancy247/tree/main/R) package. There is no `R` object returned by this function, but files are written to their appropriate subject-specific directories based on the `subject` and `trimester` parameters. A total of six data objects will be exported and the description of these data objects are presented below.
 
-- **Events data** is the collection of all the activity events that occurred during the wear period. Additionally, indicator variables are created to denote sleep, naps, and work times. These variables are named `sleep_loop`, `nap_loop`, and `work_loop`. The `wear_day` variable denotes the day during the wear period, where each wear day begins with a sleep window. Thus, the second wear day begins when the subject goes to sleep after day 1. The outputted data set is named `####-ab(t)_eventfile.csv`, with `(t)` denoting the trimester of pregnancy.
+- **Events data** is the collection of all the activity events that occurred during the wear period. Additionally, indicator variables are created to denote sleep, naps, and work times. These variables are named `sleep_loop`, `nap_loop`, and `work_loop`, respectively. The `wear_day` variable denotes the day during the wear period, where each wear day begins with a sleep window. Thus, the second wear day begins when the subject goes to sleep after day 1. The outputted data set is named `####-ab(t)_eventfile.csv`, with `(t)` denoting the trimester of pregnancy.
 - **One second EPOCH data** is an expanded version of the events data to a second by second accounting of activity during the wear period. The outputted data set is named `####-ab(t)_1secepoch.csv`, with `(t)` denoting the trimester of pregnancy.
 - **Daily values data** is the collection of daily movement and sedentary metrics. These values are calculated using the archived [`activpalProcessing`](https://github.com/deboonstra/activpalProcessing) package. By default, days 1 and 9 should not be used for further activity analysis. However, if one of the other wear days has less than 10 hours of activPAL wear, day 1 may be considered for analysis if it has at least 10 hours of wear. The outputted data set is named `####-ab(t)_daily_values.csv`, with `(t)` denoting the trimester of pregnancy.
 - **Weekly averages data** is the weekly averages of the movement and sedentary metrics during the wear period. Only the days that resulted in 10 hours or more of wear time are included in these averages. The outputted data set is named `####-ab(t)_weekly_avgs.csv`, with `(t)` denoting the trimester of pregnancy.
   - Additionally, the weekly averages are included in a site-specific data set of weekly movement and sedentary metrics. These data sets are `weekly_avgs_IOWA.csv` for the University of Iowa, `weekly_avgs_PITT.csv` for the University of Pittsburgh, and `weekly_avgs_WVU.csv` for West Virginia University.
-- **Graph** of wear day activity is saved as a PDF. The outputted data set is named `####-ab(t)_graph.pdf`, with `(t)` denoting the trimester of pregnancy.
+- **Graph** of wear day activity is saved as a PDF. The outputted graph is named `####-ab(t)_graph.pdf`, with `(t)` denoting the trimester of pregnancy.
 
 The data dictionaries for these outputted data sets may be downloaded from [`inst/extdata`](https://github.com/deboonstra/pregnancy247/tree/main/inst/extdata) of the [Github](https://github.com/deboonstra/pregnancy247/tree/main) site for the package. The file names of the dictionaries are related to the outputted data sets.
