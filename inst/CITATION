@@ -1,0 +1,8 @@
+bibentry(
+  bibtype  = "Manual",
+  title    = "pregnancy247: Data processing for the Pregnancy 24/7 study",
+  author   = "D. Erik Boonstra",
+  year     = "2023",
+  note     = "R package version 0.0.0.9",
+  url      = "https://deboonstra.github.io/pregnancy247/"
+)
