@@ -65,7 +65,7 @@ process_data <- function(
 ) {
   # Check R version ####
   if (as.integer(R.version$major) != 4 && as.numeric(R.version$minor) < 1) {
-    stop("R version must be 4.1 or higer.")
+    stop("R version must be 4.1 or higher.")
   }
 
   # Check current working directory ####
