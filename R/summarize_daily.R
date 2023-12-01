@@ -268,17 +268,17 @@ summarize_daily <- function(
       variables$met_hrs[j] <- sum(day_dat[[j]]$methrs, na.rm = TRUE)
 
       #### Total time in light intensity (1.5 to < 3 METS) activity per day
-      variables$lpa1_min[j] <- activpalProcessing::lit.min.AP(
+      variables$lpa1_min[j] <- lit_min_ap(
         mets = day[[j]]$mets1,
         posture = day[[j]]$ap.posture,
         epoch = 1
       )
-      variables$lpa30_min[j] <- activpalProcessing::lit.min.AP(
+      variables$lpa30_min[j] <- lit_min_ap(
         mets = day[[j]]$mets30,
         posture = day[[j]]$ap.posture,
         epoch = 1
       )
-      variables$lpa60_min[j] <- activpalProcessing::lit.min.AP(
+      variables$lpa60_min[j] <- lit_min_ap(
         mets = day[[j]]$mets60,
         posture = day[[j]]$ap.posture,
         epoch = 1
