@@ -349,7 +349,7 @@ summarize_daily <- function(
     fc30 <- cbind(fc, group_column_30)
     fc60 <- cbind(fc, group_column_60)
     cadence30[[j]] <- dplyr::group_by(fc30, group_column_30) |>
-      dplyr::summarise(cadence = max(steps) - min(steps))
+      dplyr::summarise(cadence = 2 * (max(steps) - min(steps)))
     cadence60[[j]] <- dplyr::group_by(fc60, group_column_60) |>
       dplyr::summarise(cadence = max(steps) - min(steps))
   }
@@ -483,19 +483,22 @@ summarize_daily <- function(
 
   # Determining valid wear days ####
   # This is based on total device wear time
+  # A day is valid if there is 20 hours of wear time (20 * 60 minutes)
   variables <- variables[order(variables$wear_day), ]
   variables$valid_day <- NA
   variables$valid_day[1] <- ifelse(variables$wear_day[1] == 1, 0, NA)
   variables$valid_day[nrow(variables)] <- ifelse(
-    variables$wear_day[nrow(variables)] == 9,
-    0, NA
+    test = variables$wear_day[nrow(variables)] == 9,
+    yes = 0,
+    no = NA
   )
   variables$valid_day <- ifelse(
-    variables$wakewear_min >= 600 & is.na(variables$valid_day),
-    1, 0
+    test = variables$wear_min >= 1200 & is.na(variables$valid_day),
+    yes = 1,
+    no = 0
   )
   if (variables$wear_day[1] == 1) {
-    if (sum(variables$valid_day) < 7 && variables$wakewear_min[1] >= 600) {
+    if (sum(variables$valid_day) < 7 && variables$wakewear_min[1] >= 1200) {
       variables$valid_day[1] <- 1
     } else {
       variables$valid_day[1] <- variables$valid_day[1]
@@ -503,7 +506,7 @@ summarize_daily <- function(
   }
 
   # Relocating variables ####
-  variables <- dplyr::relocate(variables, days, .after = wear_day) 
+  variables <- dplyr::relocate(variables, days, .after = wear_day)
   variables <- dplyr::relocate(variables, weekday, .after = days)
   variables <- dplyr::relocate(variables, weekend, .after = weekday)
   variables <- dplyr::relocate(variables, day_of_week, .after = weekend)
