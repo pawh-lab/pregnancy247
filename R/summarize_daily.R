@@ -138,11 +138,15 @@ summarize_daily <- function(
 
   ### Position and activity ####
   ### Calculating the number of certain activity per time period of interest
+  ### Sedentary time is calculated with a METs cap with 1s, 30s, and 60s epoch
+  ### to be consistent with LPA and MVPA.
   variables$steps <- NA
   variables$step_min <- 0
   variables$stand_min <- 0
   variables$upright_min <- NA
-  variables$sed_min <- 0
+  variables$sed1_min <- 0
+  variables$sed30_min <- 0
+  variables$sed60_min <- 0
   for (j in seq_along(good_days)) {
     if (nrow(day[[j]]) != 0) {
       #### Steps per day
