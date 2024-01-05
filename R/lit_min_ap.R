@@ -33,10 +33,13 @@
 #' @export lit_min_ap
 lit_min_ap <- function(mets, posture, epoch = 1) {
   lit_mins_temp <- sum((posture == 2) & (mets  < 3)) / (60 / epoch)
-  lit_mins_stand <- sum(posture == 1) / (60 / epoch)
+  lit_mins_temp <- lit_mins_temp +     
+    sum((posture == 0) & (mets  < 3) & (mets >= 1.5)) / (60 / epoch)
+  lit_mins_stand <- sum(posture == 1 & (mets  < 3)) / (60 / epoch)
   lit_mins <- lit_mins_temp + lit_mins_stand
   if (lit_mins == 0) {
     lit_mins <- NA
   }
   return(lit_mins)
 }
+

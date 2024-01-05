@@ -165,11 +165,11 @@ summarize_daily <- function(
 
       #### Sedentary minutes per day
       variables$sed1_min[j] <- sum(
-        ifelse(day[[j]]$activity == 0 & mets1 < 1.5, 1, 0)) / 60
+        ifelse(day[[j]]$activity == 0 & day[[j]]$mets1 < 1.5, 1, 0)) / 60
       variables$sed30_min[j] <- sum(
-        ifelse(day[[j]]$activity == 0 & mets30 < 1.5, 1, 0)) / 60
+        ifelse(day[[j]]$activity == 0 & day[[j]]$mets30 < 1.5, 1, 0)) / 60
       variables$sed60_min[j] <- sum(
-        ifelse(day[[j]]$activity == 0 & mets60 < 1.5, 1, 0)) / 60
+        ifelse(day[[j]]$activity == 0 & day[[j]]$mets60 < 1.5, 1, 0)) / 60
     }
   }
 
@@ -178,8 +178,8 @@ summarize_daily <- function(
   ### period of interest
   variables$sed30_bout <- 0
   variables$sed60_bout <- 0
-  variables$sed30_min <- 0
-  variables$sed60_min <- 0
+  variables$sed30b_min <- 0
+  variables$sed60b_min <- 0
   for (j in seq_along(good_days)) {
     if (nrow(day[[j]]) != 0) {
       #### Number of sit bouts > 30 minutes per day
@@ -210,9 +210,11 @@ summarize_daily <- function(
 
   ### Descriptive measures for movement behaviors ####
   variables$mean_sed_bout <- 0
-  variables$sed_perc <- 0
+  variables$sed1_perc <- 0
+  variables$sed30_perc <- 0
+  variables$sed60_perc <- 0
   variables$sitstand <- 0
-  time_awake <- variables$sed_min + variables$stand_min + variables$step_min
+  time_awake <- variables$sed1_min + variables$stand_min + variables$step_min
   stand_perc <- rep(0, length(good_days))
   step_perc <- rep(0, length(good_days))
   for (j in seq_along(good_days)) {
@@ -226,8 +228,8 @@ summarize_daily <- function(
     #### of wake and wear times. Calculated by dividing total sedentary time
     #### (sed_min) by the total time subject was awake and wear the ActivPal
     variables$sed1_perc[j] <- variables$sed1_min[j] / time_awake[j]
-    varaibles$sed30_perc[j] <- variables$sed30_min[j] / time_awake[j]
-    varaibles$sed60_perc[j] <- variables$sed60_min[j] / time_awake[j]
+    variables$sed30_perc[j] <- variables$sed30_min[j] / time_awake[j]
+    variables$sed60_perc[j] <- variables$sed60_min[j] / time_awake[j]
     stand_perc[j] <- variables$stand_min[j] / time_awake[j]
     step_perc[j] <- variables$step_min[j] / time_awake[j]
 
@@ -238,8 +240,14 @@ summarize_daily <- function(
   }
 
   #### Adjusting for 0 / 0 producing NaN
-  variables$sed_perc <- ifelse(
-    is.nan(variables$sed_perc), 0, variables$sed_perc
+  variables$sed1_perc <- ifelse(
+    is.nan(variables$sed1_perc), 0, variables$sed1_perc
+  )
+  variables$sed30_perc <- ifelse(
+    is.nan(variables$sed30_perc), 0, variables$sed30_perc
+  )
+  variables$sed60_perc <- ifelse(
+    is.nan(variables$sed60_perc), 0, variables$sed60_perc
   )
   stand_perc <- ifelse(is.nan(stand_perc), 0, stand_perc)
   step_perc <- ifelse(is.nan(step_perc), 0, step_perc)
@@ -541,7 +549,7 @@ summarize_daily <- function(
   variables <- dplyr::relocate(variables, sed1_perc, .after = mean_sed_bout)
   variables <- dplyr::relocate(variables, sed30_perc, .after = sed1_perc)
   variables <- dplyr::relocate(variables, sed60_perc, .after = sed30_perc)
-  variables <- dplyr::relocate(variables, sitstand, .after = sed_perc)
+  variables <- dplyr::relocate(variables, sitstand, .after = sed60_perc)
   variables <- dplyr::relocate(variables, met_hrs, .after = sitstand)
   variables <- dplyr::relocate(variables, lpa1_min, .after = met_hrs)
   variables <- dplyr::relocate(variables, mpa1_min, .after = lpa1_min)
