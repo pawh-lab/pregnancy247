@@ -160,7 +160,12 @@ summarize_daily <- function(
       variables$upright_min[j] <- variables$stand_min[j] + variables$step_min[j]
 
       #### Sedentary minutes per day
-      variables$sed_min[j] <- sum(ifelse(day[[j]]$activity == 0, 1, 0)) / 60
+      variables$sed1_min[j] <- sum(
+        ifelse(day[[j]]$activity == 0 & mets1 < 1.5, 1, 0)) / 60
+      variables$sed30_min[j] <- sum(
+        ifelse(day[[j]]$activity == 0 & mets30 < 1.5, 1, 0)) / 60
+      variables$sed60_min[j] <- sum(
+        ifelse(day[[j]]$activity == 0 & mets60 < 1.5, 1, 0)) / 60
     }
   }
 
@@ -186,13 +191,13 @@ summarize_daily <- function(
       )
 
       #### Time spent in sitting bouts > 30 minutes per day
-      variables$sed30_min[j] <- activpalProcessing::prolonged.sed.bouts.min(
+      variables$sed30b_min[j] <- activpalProcessing::prolonged.sed.bouts.min(
         posture = day[[j]]$ap.posture,
         epoch = 1, n = 30
       )
 
       #### Time spent in sitting bouts > 60 minutes per day
-      variables$sed60_min[j] <- activpalProcessing::prolonged.sed.bouts.min(
+      variables$sed60b_min[j] <- activpalProcessing::prolonged.sed.bouts.min(
         posture = day[[j]]$ap.posture,
         epoch = 1, n = 60
       )
@@ -216,7 +221,9 @@ summarize_daily <- function(
     #### Total time spend sedentary, standing, and stepping expressed as percent
     #### of wake and wear times. Calculated by dividing total sedentary time
     #### (sed_min) by the total time subject was awake and wear the ActivPal
-    variables$sed_perc[j] <- variables$sed_min[j] / time_awake[j]
+    variables$sed1_perc[j] <- variables$sed1_min[j] / time_awake[j]
+    varaibles$sed30_perc[j] <- variables$sed30_min[j] / time_awake[j]
+    varaibles$sed60_perc[j] <- variables$sed60_min[j] / time_awake[j]
     stand_perc[j] <- variables$stand_min[j] / time_awake[j]
     step_perc[j] <- variables$step_min[j] / time_awake[j]
 
@@ -519,13 +526,17 @@ summarize_daily <- function(
   variables <- dplyr::relocate(variables, step_min, .after = valid_day)
   variables <- dplyr::relocate(variables, stand_min, .after = step_min)
   variables <- dplyr::relocate(variables, upright_min, .after = stand_min)
-  variables <- dplyr::relocate(variables, sed_min, .after = upright_min)
-  variables <- dplyr::relocate(variables, sed30_bout, .after = sed_min)
-  variables <- dplyr::relocate(variables, sed60_bout, .after = sed30_bout)
-  variables <- dplyr::relocate(variables, sed30_min, .after = sed60_bout)
+  variables <- dplyr::relocate(variables, sed1_min, .after = upright_min)
+  variables <- dplyr::relocate(variables, sed30_min, .after = sed1_min)
   variables <- dplyr::relocate(variables, sed60_min, .after = sed30_min)
-  variables <- dplyr::relocate(variables, mean_sed_bout, .after = sed60_min)
-  variables <- dplyr::relocate(variables, sed_perc, .after = mean_sed_bout)
+  variables <- dplyr::relocate(variables, sed30_bout, .after = sed60_min)
+  variables <- dplyr::relocate(variables, sed60_bout, .after = sed30_bout)
+  variables <- dplyr::relocate(variables, sed30b_min, .after = sed60_bout)
+  variables <- dplyr::relocate(variables, sed60b_min, .after = sed30b_min)
+  variables <- dplyr::relocate(variables, mean_sed_bout, .after = sed60b_min)
+  variables <- dplyr::relocate(variables, sed1_perc, .after = mean_sed_bout)
+  variables <- dplyr::relocate(variables, sed30_perc, .after = sed1_perc)
+  variables <- dplyr::relocate(variables, sed60_perc, .after = sed30_perc)
   variables <- dplyr::relocate(variables, sitstand, .after = sed_perc)
   variables <- dplyr::relocate(variables, met_hrs, .after = sitstand)
   variables <- dplyr::relocate(variables, lpa1_min, .after = met_hrs)
