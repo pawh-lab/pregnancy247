@@ -81,7 +81,11 @@ read_msleep <- function(subject, trimester, nap = FALSE, file = NULL, ...) {
     na.string = c("", "NA", "N/A"),
     skip = 67, header = FALSE, stringsAsFactors = FALSE, ...
   )
-  w <- which(temp[, 1] == "EXCLUDED")
+  tmp_vals <- c(
+    "REST", "Rest Summary", "ACTIVE", "Active Summary", "SLEEP",
+    "Sleep Summary", "DAILY", "Daily Summary", "EXCLUDED"
+  )
+  w <- which(temp[, 1] %in% tmp_vals)
   w <- w[length(w)]
   # Importing the data ####
   dat <- utils::read.csv(
