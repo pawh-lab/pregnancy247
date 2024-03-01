@@ -344,7 +344,7 @@ check_msleep <- function(x, y = NULL, nap = FALSE, cutpoint = 30) {
   ### Efficiency ####
   for (i in n_sleep) {
     if (!is.na(sleep$efficiency[i]) && (sleep$efficiency[i] <= 40.0)) {
-      flag1[i] <- 1
+      sleep$flag1[i] <- 1
       if (sleep$flag2[i] == "") {
         sleep$flag2[i] <- "Efficiency <= 40%"
       } else {
