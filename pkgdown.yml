@@ -1,11 +1,11 @@
-pandoc: 2.19.2
+pandoc: 3.1.11
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   pregnancy247: pregnancy247.html
   process-data: process-data.html
   quality-check: quality-check.html
-last_built: 2024-01-05T16:48Z
+last_built: 2024-03-01T15:50Z
 urls:
   reference: https://deboonstra.github.io/pregnancy247/reference
   article: https://deboonstra.github.io/pregnancy247/articles
