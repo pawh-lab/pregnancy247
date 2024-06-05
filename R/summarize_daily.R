@@ -499,6 +499,13 @@ summarize_daily <- function(
     data = variables,
     expr = wakewear_min + sleepwear_min + napwear_min
   )
+  
+  nonwear_window <- list()
+  for (j in seq_along(good_days)) {
+    nonwear_window[[j]] <- day_total[[j]][day_total[[j]]$sleep_loop == 0 & day_total[[j]]$wake_loop == 99, ]
+  }
+  
+  variables$nonwear_min <- ifelse(nrow(nonwear_window) != 0, nrow(nonwear_window)/60, 0)
 
   # Determining valid wear days ####
   # This is based on total device wear time
@@ -512,12 +519,12 @@ summarize_daily <- function(
     no = NA
   )
   variables$valid_day <- ifelse(
-    test = variables$wear_min >= 1200 & is.na(variables$valid_day),
+    test = variables$nonwear_min/variables$wear_min <= 0.166666 & is.na(variables$valid_day),
     yes = 1,
     no = 0
   )
   if (variables$wear_day[1] == 1) {
-    if (sum(variables$valid_day) < 7 && variables$wakewear_min[1] >= 1200) {
+    if (sum(variables$valid_day) < 7 && variables$nonwear_min/variables$wear_min <= 0.166666 ) {
       variables$valid_day[1] <- 1
     } else {
       variables$valid_day[1] <- variables$valid_day[1]
@@ -531,7 +538,8 @@ summarize_daily <- function(
   variables <- dplyr::relocate(variables, day_of_week, .after = weekend)
   variables <- dplyr::relocate(variables, steps, .after = day_of_week)
   variables <- dplyr::relocate(variables, wear_min, .after = steps)
-  variables <- dplyr::relocate(variables, wakewear_min, .after = wear_min)
+  variables <- dplyr::relocate(variables, nonwear_min, .after = wear_min)
+  variables <- dplyr::relocate(variables, wakewear_min, .after = nonwear_min)
   variables <- dplyr::relocate(variables, sleepwear_min, .after = wakewear_min)
   variables <- dplyr::relocate(variables, napwear_min, .after = sleepwear_min)
   variables <- dplyr::relocate(variables, valid_day, .after = napwear_min)

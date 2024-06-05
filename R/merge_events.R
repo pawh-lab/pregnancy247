@@ -174,8 +174,6 @@ merge_events <- function(
       for (k in seq_along(hold1)) {
         for (j in seq_len(nrow(dat))) {
           if (dat$time[j] >= hold1[k] && dat$time[j] <= hold2[k]) {
-            dat$sleep_loop[j] <- 99
-            dat$nap_loop[j] <- 99
             dat$wake_loop[j] <- 99
           }
         }
