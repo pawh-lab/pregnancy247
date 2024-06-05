@@ -502,10 +502,10 @@ summarize_daily <- function(
   
   nonwear_window <- list()
   for (j in seq_along(good_days)) {
-    nonwear_window[[j]] <- day_total[[j]][day_total[[j]]$sleep_loop == 0 & day_total[[j]]$wake_loop == 99, ]
+    nonwear_window[[j]] <- day_total[[j]][day_total[[j]]$sleep_loop != 0 & day_total[[j]]$wake_loop == 99, ]
   }
   
-  variables$nonwear_min <- ifelse(nrow(nonwear_window) != 0, nrow(nonwear_window)/60, 0)
+  variables$nonwear_min <- ifelse(length(nonwear_window) != 0, nrow(nonwear_window)/60, 0)
 
   # Determining valid wear days ####
   # This is based on total device wear time
