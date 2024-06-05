@@ -23,7 +23,7 @@
 #' wear period.
 #'
 #' @examples
-#' \dontrun{
+#' /dontrun{
 #' process_dat <- process_events(data = dat)
 #' sec_by_sec <- create_1s_epoch(data = process_dat)
 #' summ_daily <- summarize_daily(
@@ -69,8 +69,10 @@ summarize_daily <- function(
 
   ## Sec by sec data ####
   day_total <- split(
-    x = data_1s_epoch[data_1s_epoch$wake_loop != 99, ],
-    f = data_1s_epoch$wear_day[data_1s_epoch$wake_loop != 99]
+    x = data_1s_epoch[!(data_1s_epoch$wake_loop == 99 &
+                          data_1s_epoch$sleep_loop == 0), ],
+    f = data_1s_epoch$wear_day[!(data_1s_epoch$wake_loop == 99 &
+                                   data_1s_epoch$sleep_loop == 0)]
   )
   day <- lapply(
     X = seq_along(day_total),
@@ -499,14 +501,17 @@ summarize_daily <- function(
     data = variables,
     expr = wakewear_min + sleepwear_min + napwear_min
   )
-  
-  nonwear_window <- list()
-  for (j in seq_along(good_days)) {
-    nonwear_window[[j]] <- day_total[[j]][day_total[[j]]$sleep_loop != 0 & day_total[[j]]$wake_loop == 99, ]
-  }
-  
-  variables$nonwear_min <- ifelse(length(nonwear_window) != 0, nrow(nonwear_window)/60, 0)
 
+nonwear <- data_1s_epoch %>% filter(wake_loop == 99 & sleep_loop == 0) %>% 
+  group_by(wear_day) %>% summarize(nonwear_min = n()/60)
+
+variables$nonwear_min <- NA
+for(j in seq_along(good_days)){
+  variables$nonwear_min[j]<- ifelse(good_days[j] %in% nonwear$wear_day, 
+                                    nonwear$nonwear_min[nonwear$wear_day 
+                                                        == good_days[j]] ,
+                                    0)
+}
   # Determining valid wear days ####
   # This is based on total device wear time
   # A day is valid if there is 20 hours of wear time (20 * 60 minutes)
