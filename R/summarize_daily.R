@@ -524,7 +524,7 @@ for(j in seq_along(good_days)){
     no = NA
   )
   variables$valid_day <- ifelse(
-    test = variables$nonwear_min/variables$wear_min <= 0.166666 & is.na(variables$valid_day),
+    test = variables$nonwear_min/(variables$wear_min+variables$nonwear_min) <= 0.166666 & is.na(variables$valid_day),
     yes = 1,
     no = 0
   )
