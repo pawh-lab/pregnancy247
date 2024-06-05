@@ -524,7 +524,7 @@ summarize_daily <- function(
     no = 0
   )
   if (variables$wear_day[1] == 1) {
-    if (sum(variables$valid_day) < 7 && variables$nonwear_min[1]/variables$wear_min[1] <= 0.166666 ) {
+    if (sum(variables$valid_day) < 7 &&  variables$wakewear_min[1] >= 1200 ) {
       variables$valid_day[1] <- 1
     } else {
       variables$valid_day[1] <- variables$valid_day[1]
