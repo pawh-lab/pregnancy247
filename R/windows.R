@@ -267,7 +267,7 @@ windows_sleep <- function(sleep) {
     ## to account change in day due time
     ## Windows are based on diary dates which are static dates
     if (!is.na(sleep_start[j]) && !is.na(sleep_end[j])) {
-      noon <- as.POSIXct(paste0(as.Date(sleep_start[j]), " ", "12:00:00", tz = "UTC"))
+      noon <- as.POSIXct(paste0(as.Date(sleep_start[j]), " ", "12:00:00"), tz = "UTC")
       if (sleep_start[j] < noon) {
         sleep_start[j] <- sleep_start[j] + 86400
       }
