@@ -75,9 +75,6 @@ process_data <- function(
   if (!is.character(subject)) {
     stop("subject must be a character string denoting subject ID.")
   }
-  if (nchar(trimester) != 1 || !(as.integer(trimester) %in% c(1, 2, 3))) {
-    stop("trimester must be either 1, 2, 3 denoting pregnancy trimester.")
-  }
   valid_days <- c(day1, day2, day3, day4, day5, day6, day7, day8, day9)
   if (!all(is.logical(valid_days))) {
     stop("day(i) must be a logical denoting valid processing day.")
