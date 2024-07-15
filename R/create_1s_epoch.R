@@ -159,6 +159,39 @@ create_1s_epoch <- function(data, good_days = 1:9, remove_days = FALSE) {
   if (remove_days) {
     sec_by_sec <- subset(sec_by_sec, subset = wear_day %in% good_days)
   }
+  
+  #Take out extra epochs that have matching times. Avoids 
+  #over counting epochs less than 1s (Gallagher)
+  
+  dups <- which(duplicated(sec_by_sec$time))
+  longer_dup <- (sec_by_sec$interval[dups] < sec_by_sec$interval[dups-1])
+  sec_by_sec$ap.posture[dups-1] <- ifelse(longer_dup,sec_by_sec$ap.posture[dups -1],
+                                   sec_by_sec$ap.posture[dups])
+  sec_by_sec$activity[dups-1] <- ifelse(longer_dup,sec_by_sec$activity[dups-1],
+                                 sec_by_sec$activity[dups])
+  sec_by_sec$met.hours[dups-1] <- (sec_by_sec$met.hours[dups] * sec_by_sec$interval[dups] +
+                              sec_by_sec$met.hours[dups-1] * sec_by_sec$interval[dups-1]) / 
+    (sec_by_sec$interval[dups] + sec_by_sec$interval[dups-1] )
+  sec_by_sec$met.hours[is.na(sec_by_sec$met.hours)] <- Inf 
+  sec_by_sec$mets1[dups-1] <- (sec_by_sec$mets1[dups] * sec_by_sec$interval[dups] +
+                          sec_by_sec$mets1[dups-1] * sec_by_sec$interval[dups-1]) / 
+    (sec_by_sec$interval[dups] + sec_by_sec$interval[dups-1] )
+  sec_by_sec$mets30[dups-1] <- (sec_by_sec$mets30[dups] * sec_by_sec$interval[dups] +
+                           sec_by_sec$mets30[dups-1] * sec_by_sec$interval[dups-1]) / 
+    (sec_by_sec$interval[dups] + sec_by_sec$interval[dups-1] )
+  sec_by_sec$mets60[dups-1] <- (sec_by_sec$mets60[dups] * sec_by_sec$interval[dups] +
+                           sec_by_sec$mets60[dups-1] * sec_by_sec$interval[dups-1]) / 
+    (sec_by_sec$interval[dups] + sec_by_sec$interval[dups-1] )
+  sec_by_sec$met.hours[is.na(sec_by_sec$met.hours)] <- Inf 
+  sec_by_sec$mets1[is.na(sec_by_sec$mets1)] <- Inf 
+  sec_by_sec$mets30[is.na(sec_by_sec$mets30)] <- Inf
+  sec_by_sec$mets60[is.na(sec_by_sec$mets60)] <- Inf
+  sec_by_sec <- sec_by_sec[-dups,]
+  
+  
+  
+  
+  
   class(sec_by_sec) <- c("one.epoch.data", "data.frame")
   return(sec_by_sec)
 }

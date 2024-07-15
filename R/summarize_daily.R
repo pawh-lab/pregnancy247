@@ -70,9 +70,11 @@ summarize_daily <- function(
   ## Sec by sec data ####
   day_total <- split(
     x = data_1s_epoch[!(data_1s_epoch$wake_loop == 99 &
-                          data_1s_epoch$sleep_loop == 0), ],
+                          data_1s_epoch$sleep_loop != 1 &
+                          data_1s_epoch$nap_loop !=1), ],
     f = data_1s_epoch$wear_day[!(data_1s_epoch$wake_loop == 99 &
-                                   data_1s_epoch$sleep_loop == 0)]
+                                   data_1s_epoch$sleep_loop != 1 &
+                                   data_1s_epoch$nap_loop !=1)]
   )
   day <- lapply(
     X = seq_along(day_total),
@@ -149,6 +151,7 @@ summarize_daily <- function(
   variables$sed1_min <- 0
   variables$sed30_min <- 0
   variables$sed60_min <- 0
+  variables$sit_min <- 0 
   for (j in seq_along(good_days)) {
     if (nrow(day[[j]]) != 0) {
       #### Steps per day
@@ -164,6 +167,9 @@ summarize_daily <- function(
 
       #### Upright minutes per day
       variables$upright_min[j] <- variables$stand_min[j] + variables$step_min[j]
+      
+      ### Sit minutes per day 
+      variables$sit_min[j] <- sum(ifelse(day[[j]]$activity == 0, 1, 0)) / 60
 
       #### Sedentary minutes per day
       variables$sed1_min[j] <- sum(
@@ -216,7 +222,7 @@ summarize_daily <- function(
   variables$sed30_perc <- 0
   variables$sed60_perc <- 0
   variables$sitstand <- 0
-  time_awake <- variables$sed1_min + variables$stand_min + variables$step_min
+  time_awake <- variables$sit_min + variables$stand_min + variables$step_min
   stand_perc <- rep(0, length(good_days))
   step_perc <- rep(0, length(good_days))
   for (j in seq_along(good_days)) {
@@ -502,7 +508,8 @@ summarize_daily <- function(
     expr = wakewear_min + sleepwear_min + napwear_min
   )
 
-nonwear <- data_1s_epoch %>% filter(wake_loop == 99 & sleep_loop == 0) %>% 
+nonwear <- data_1s_epoch %>% 
+  filter(wake_loop == 99 & sleep_loop != 1 & nap_loop != 1) %>% 
   group_by(wear_day) %>% summarize(nonwear_min = n()/60)
 
 variables$nonwear_min <- NA
@@ -551,7 +558,8 @@ for(j in seq_along(good_days)){
   variables <- dplyr::relocate(variables, step_min, .after = valid_day)
   variables <- dplyr::relocate(variables, stand_min, .after = step_min)
   variables <- dplyr::relocate(variables, upright_min, .after = stand_min)
-  variables <- dplyr::relocate(variables, sed1_min, .after = upright_min)
+  variables <- dplyr::relocate(variables, sit_min, .after = upright_min)
+  variables <- dplyr::relocate(variables, sed1_min, .after = sit_min)
   variables <- dplyr::relocate(variables, sed30_min, .after = sed1_min)
   variables <- dplyr::relocate(variables, sed60_min, .after = sed30_min)
   variables <- dplyr::relocate(variables, sed30_bout, .after = sed60_min)
@@ -636,7 +644,7 @@ for(j in seq_along(good_days)){
   # Averages of per day activities ####
   # Find the average values for all the variables in the variables dataset
   # given that the wear day is a valid day
-  hold1 <- variables[variables$valid_day == 1, ]
+  hold1 <- variables[variables$valid_day == 1 & variables$wakewear_min > 0, ]
   hold2 <- subset(hold1, select = -c(wear_day, day_of_week, valid_day))
   hold2$days <- as.numeric(hold2$days)
   avgs <- dplyr::summarise_all(.tbl = hold2, .funs = mean)

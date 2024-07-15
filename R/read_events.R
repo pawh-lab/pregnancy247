@@ -51,13 +51,23 @@ read_events <- function(subject, trimester, file = NULL, ...) {
       file = paste0(data_loc, "/", files),
       skip = 2, header = FALSE, sep = ";", stringsAsFactors = FALSE, ...
     )
+    look <- as.numeric(gregexec("VANE", files))
+    ver<- substring(files, look+7,look+8)
+    if(ver == "09"){
+      dat <- dat[,-7:-8]
+    }
+    
   } else {
     dat <- utils::read.csv(
       file = file,
       skip = 2, header = FALSE, sep = ";", stringsAsFactors = FALSE, ...
     )
+    look <- as.numeric(gregexec("VANE", files))
+    ver<- substring(files, look+7,look+8)
+    if(ver == "09"){
+      dat <- dat[,-7:-8]
+    }
   }
-
   class(dat) <- c("data.events", "data.frame")
   return(dat)
 }
