@@ -237,22 +237,22 @@ check_msleep <- function(x, y = NULL, nap = FALSE, cutpoint = 30) {
     #### Obtaining start and end of REST intervals in sleep and nap data ####
     yy_stimes <- as.POSIXct(
       x = paste(yy$start_date, yy$start_time),
-      format = "%d/%m/%Y %H:%M:%OS",
+      format = "%m/%d/%Y %H:%M:%OS",
       tz = "UTC"
     )
     rest_stimes <- as.POSIXct(
       x = paste(rest$start_date, rest$start_time),
-      format = "%d/%m/%Y %H:%M:%OS",
+      format = "%m/%d/%Y %H:%M:%OS",
       tz = "UTC"
     )
     yy_etimes <- as.POSIXct(
       x = paste(yy$end_date, yy$end_time),
-      format = "%d/%m/%Y %H:%M:%OS",
+      format = "%m/%d/%Y %H:%M:%OS",
       tz = "UTC"
     )
     rest_etimes <- as.POSIXct(
       x = paste(rest$end_date, rest$end_time),
-      format = "%d/%m/%Y %H:%M:%OS",
+      format = "%m/%d/%Y %H:%M:%OS",
       tz = "UTC"
     )
 
