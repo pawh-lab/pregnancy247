@@ -1,96 +1,34 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/404.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/articles/pregnancy247.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/articles/process-data.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/articles/quality-check.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/index.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/breaks_ap.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/check_dir.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/check_msleep.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/create_1s_epoch.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/create_dict.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/lit_min_ap.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/loc.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/merge_events.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/mpa_min_ap.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/plot_1s_epoch.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/process_data.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/process_events.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/quality_check.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/read_events.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/read_msleep.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/read_sleep.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/save_plot_1s_epoch.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/summarize_daily.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/windows.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/write.html</loc>
-  </url>
-  <url>
-    <loc>https://deboonstra.github.io/pregnancy247/reference/write_msleep.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://deboonstra.github.io/pregnancy247/404.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/LICENSE-text.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/LICENSE.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/articles/index.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/articles/pregnancy247.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/articles/process-data.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/articles/quality-check.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/authors.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/index.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/breaks_ap.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/check_dir.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/check_msleep.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/create_1s_epoch.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/create_dict.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/index.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/lit_min_ap.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/loc.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/merge_events.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/mpa_min_ap.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/plot_1s_epoch.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/process_data.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/process_events.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/quality_check.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/read_events.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/read_msleep.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/read_sleep.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/save_plot_1s_epoch.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/summarize_daily.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/windows.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/write.html</loc></url>
+<url><loc>https://deboonstra.github.io/pregnancy247/reference/write_msleep.html</loc></url>
 </urlset>
+
