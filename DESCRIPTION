@@ -2,12 +2,16 @@ Package: pregnancy247
 Title: Data procressing for the Pregnancy 24/7 study
 Version: 0.0.0.9
 Date: 2023-08-16
-Authors@R: 
+Authors@R:
+  person("Physical Activity and Women's Health Lab", email = "pawh-lab@uiowa.edu", role = "cre")
   person(
     "D. Erik", "Boonstra", role = c("aut"),
     email = "daniel-boonstra@uiowa.edu",
     comment = c(ORCID = "0009-0005-1599-1809")     
   )
+  person("Jacob", "Gallagher", email = "jgall13@iastate.edu", role = "ctb")
+  person("Jaemyung", "Kim", email = "jaemyung-kim@uiowa.edu", role = "ctb", comment = c(ORCID = "0000-0002-3788-5856"))
+          
 Description: Processes the raw Actiwatch, sleep diary, and activPAL data for The University of Iowa [Pregnancy 24/7](https://clinicaltrials.uihealthcare.org/studies/pregnancy-247) research study conducted by Kara Whitaker.
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -29,4 +33,4 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-URL: https://deboonstra.github.io/pregnancy247/
+URL: https://pawh-lab.github.io/pregnancy247/
