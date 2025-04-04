@@ -4,7 +4,7 @@ Version: 0.0.0.9
 Date: 2023-08-16
 Authors@R: 
   person(
-    "D. Erik", "Boonstra", role = c("aut", "cre"),
+    "D. Erik", "Boonstra", role = c("aut"),
     email = "daniel-boonstra@uiowa.edu",
     comment = c(ORCID = "0009-0005-1599-1809")     
   )
