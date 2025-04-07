@@ -95,6 +95,16 @@ merge_events <- function(
   add_events <- add_events[, col_order]
   dat <- dplyr::bind_rows(data, add_events)
   dat <- dat[order(dat$time, dat$datacount), ]
+  ## Inserting wear_day and loop data to duplicated rows
+      dup_check <- subset(dat, time %in% unique(dat[duplicated(dat$time),]$time))
+      n <- length(dup_check$time)
+      if(length(dup_check$time != 0)){
+        for(i in seq(1, n/2 + length(unique(dup_check$time)) - 1, 2)){
+          if(!is.na(dup_check[i+1, 7]) & is.na(dup_check[i, 7])){
+            dat[which(dat$time == dup_check$time[i])[1], c(7:11)] <- dat[which(dat$time == dup_check$time[i])[2], c(7:11)]
+          } else{next}
+        }
+      }
   dat <- dat[!duplicated(dat$time), ]
   dat <- dat[order(dat$time, dat$datacount), ]
 
@@ -108,6 +118,10 @@ merge_events <- function(
   ## wakes up on the final day of the wear period.
   if (!is.na(end_time)) {
     dat <- subset(dat, subset = time <= end_time)
+    d <- rle(!is.na(dat$methrs))
+    na <- d$lengths[length(d$lengths)]
+    last_int <- dat$interval[length(dat$interval) - na] # Last interval value
+    last_time <- dat$time[length(dat$time) - na] #Last time value
   }
 
   # Fill in missing values ####
@@ -205,33 +219,39 @@ merge_events <- function(
 
   #### Last observation ####
   dat$interval[t] <- 1
-
+  # Last time and Last interval adjustment
+  dat$methrs[length(dat$methrs) - na] <- ifelse(dat$time[length(dat$time) - na] == last_time & dat$interval[length(dat$interval) - na] != last_int, 
+                                                dat$methrs[length(dat$methrs) - na] * (dat$interval[length(dat$interval) - na] / last_int),
+                                                dat$methrs[length(dat$methrs) - na])
   ### Met hours ####
-  for (j in seq_along(dat$time)) {
-    if (is.na(dat$methrs[j]) && (dat$wear_day[j] %in% good_days)) {
-      mets <- dat$methrs[j - 1] / (dat$interval[j - 1] / 3600)
-      first_position_time <- as.numeric(
-        difftime(dat$time[j], dat$time[j - 1],
-        units = "hours"
-        )
-      )
-      second_position_time <- as.numeric(
-        difftime(dat$time[j + 1], dat$time[j],
-        units = "hours"
-        )
-      )
-      totaltime <- dat$interval[j - 1]
-      first_factor <- (first_position_time / totaltime) * mets
-      second_factor <- (second_position_time / totaltime) * mets
-      dat$methrs[j - 1] <- first_factor * first_position_time
-      dat$methrs[j] <- second_factor * second_position_time
-    } else {
-      dat$methrs[j] <- dat$methrs[j]
+    # Split indicator
+    condition <- is.na(dat$time)
+    for(i in 1:(length(dat$methrs)-na)){
+      if(is.na(dat$methrs[i])){
+        condition[c(`i`, `i`-1)] <- TRUE
+      }
     }
-  }
+    row.names(dat) <- seq_along(dat$time) # Re-order the row names
+    
+    # Computing marker variables to indicate the same activity
+    dat$marker <- ifelse(condition & !is.na(dat$methrs), 1, NA)
+    dat$marker2 <- NA
+    dat$marker2[which(dat$marker == 1)] <- seq_len(sum(dat$marker, na.rm = TRUE))
+    dat[condition,] <- tidyr::fill(dat[condition,], marker2, .direction = "down")
+    
+    # Computing proportional MET values by the interval
+    for(j in seq_along(unique(dat$marker2)[-1])){
+      a <- subset(dat, marker2 == `j`)
+      b <- a$methrs[1]
+      denom <- sum(a$interval)
+      for(i in 1:length(a$methrs)){
+        dat[which(dat$marker2 == `j` & condition),]$methrs[i] <- b * (a$interval[i] / denom)
+      }
+    }
 
   #### Last observation ####
-  dat$methrs[t] <- dat$methrs[t - 1]
+  dat$methrs <- ifelse(is.na(dat$methrs) , 1.25/3600*dat$interval, dat$methrs)
+  dat$methrs[t] <- 1.25/3600
 
   ### Cumulative steps ####
   for (j in seq_along(dat$cumulativesteps)) {
@@ -243,15 +263,11 @@ merge_events <- function(
   }
 
   ### Activity ####
-  dat$activity[is.na(dat$activity)] <- 0
+  dat <- tidyr::fill(dat, activity, .direction = "down")
 
   ### Data count ####
-  for (j in seq_along(dat$datacount)) {
-    if (is.na(dat$datacount[j]) && (dat$wear_day[j] %in% good_days)) {
-      dat$datacount[j] <- dat$datacount[j - 1] + (dat$interval[j - 1] * 10)
-    } else {
-      dat$datacount[j] <- dat$datacount[j]
-    }
+  for(j in 2:length(dat$datacount)){
+    dat$datacount[j] <- dat$datacount[j-1] + (round(dat$interval[j-1], 1) * 10)
   }
 
   ## Adjusting con-current event times ####
@@ -262,12 +278,14 @@ merge_events <- function(
   ## Numbering the events ####
   dat$event <- seq_along(nrow(dat))
   dat <- dplyr::relocate(dat, event, .before = time)
-
+  dat <- dat[ , 1:12] # Removing indicator variables
+  
   # Returning merged data set ####
   ## Excluding invalid wear days ####
   if (remove_days) {
     dat <- subset(dat, subset = wear_day %in% good_days)
   }
+  dat <- dat[!duplicated(dat$time, fromLast = TRUE), ] #Remove duplicated time
   class(dat) <- c("merge.data.events", "data.frame")
   return(dat)
 }
