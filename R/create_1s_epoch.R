@@ -118,26 +118,36 @@ create_1s_epoch <- function(data, good_days = 1:9, remove_days = FALSE) {
   n <- as.numeric(nrow(sec_by_sec))
 
   #### 1 second met values ####
-  sec_by_sec$met.hours <- sec_by_sec$met.hours / sec_by_sec$interval
   sec_by_sec$mets1 <- (sec_by_sec$met.hours * 3600) / sec_by_sec$interval
   sec_by_sec <- dplyr::relocate(sec_by_sec, mets1, .after = met.hours)
 
-  #### 30 second met values ####
-  time30 <- start_time + (30 * rep(0:floor((n / 30)), each = 30, length = n))
-  sec_by_sec$mets30 <- rep(
-    tapply(sec_by_sec$mets1, time30, mean), each = 30,
-    length = n
-  )
-  sec_by_sec <- dplyr::relocate(sec_by_sec, mets30, .after = mets1)
+  #### 30-second epoch ####
+  condition30 <- lubridate::second(sec_by_sec$time) == 0 | lubridate::second(sec_by_sec$time) == 30
+  sec_by_sec$epoch_30 <- NA
+  sec_by_sec$epoch_30[1] <- 0
+  sec_by_sec$epoch_30[condition30] <- seq_len(sum(condition30))
+  sec_by_sec <- tidyr::fill(sec_by_sec, epoch_30, .direction = "down")
+  
+    ### 30-second met values ###
+    met30 <- aggregate(sec_by_sec$mets1, list(group = sec_by_sec$epoch_30), FUN = "mean")
+    sec_by_sec$mets30 <- NA
+    sec_by_sec$mets30 <- met30$x[match(sec_by_sec$epoch_30, met30$group)]
+    sec_by_sec <- dplyr::relocate(sec_by_sec, mets30, .after = mets1)
 
-  #### 60 second met values ####
-  time60 <- start_time + (60 * rep(0:floor((n / 60)), each = 60, length = n))
-  sec_by_sec$mets60 <- rep(
-    tapply(sec_by_sec$mets1, time60, mean), each = 60,
-    length = n
-  )
-  sec_by_sec <- dplyr::relocate(sec_by_sec, mets60, .after = mets30)
-
+  #### 60-second epoch ####
+  condition60 <- lubridate::second(sec_by_sec$time) == 0
+  sec_by_sec$epoch_60 <- NA
+  sec_by_sec$epoch_60[1] <- 0
+  sec_by_sec$epoch_60[condition60] <- seq_len(sum(condition60))
+  sec_by_sec <- tidyr::fill(sec_by_sec, epoch_60, .direction = "down")
+  sec_by_sec <- dplyr::relocate(sec_by_sec, epoch_60, .after = epoch_30)
+  
+    ### 60-second met values ###
+    met60 <- aggregate(sec_by_sec$mets1, list(group = sec_by_sec$epoch_60), FUN = "mean")
+    sec_by_sec$mets60 <- NA
+    sec_by_sec$mets60 <- met60$x[match(sec_by_sec$epoch_60, met60$group)]
+    sec_by_sec <- dplyr::relocate(sec_by_sec, mets60, .after = mets30)
+  
   #### Rounding met values
   sec_by_sec$mets1 <- signif(sec_by_sec$mets1, 3)
   sec_by_sec$mets30 <- signif(sec_by_sec$mets30, 3)
@@ -154,7 +164,7 @@ create_1s_epoch <- function(data, good_days = 1:9, remove_days = FALSE) {
   sec_by_sec$ap.posture <- sec_by_sec$activity
   sec_by_sec <- dplyr::relocate(sec_by_sec, ap.posture, .before = activity)
 
-  # Returning 1 second epoch data set ####
+  # Returning 1-second epoch data set ####
   ## Excluding invalid wear days ####
   if (remove_days) {
     sec_by_sec <- subset(sec_by_sec, subset = wear_day %in% good_days)
