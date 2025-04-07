@@ -4,5 +4,5 @@ bibentry(
   author   = "D. Erik Boonstra",
   year     = "2023",
   note     = "R package version 0.0.0.9",
-  url      = "https://deboonstra.github.io/pregnancy247/"
+  url      = "https://pawh-lab.github.io/pregnancy247/"
 )
