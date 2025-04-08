@@ -86,7 +86,7 @@ windows_sleep <- function(sleep) {
   # Diary dates ####
   all_days <- 1:9
   diary_dates <- unlist(sleep[1, grep("^diary_date", colnames(sleep))])
-  diary_dates <- as.character(as.Date(diary_dates, format = "%m/%d/%Y"))
+  diary_dates <- as.character(as.Date(diary_dates, tryFormats = c("%m/%d/%Y", "%Y-%m-%d"))
   na_dates <- !is.na(diary_dates) # this denotes whether a date is not missing
   diary_dates <- diary_dates[na_dates]
 
@@ -340,7 +340,7 @@ windows_nap <- function(sleep, interval = "first") {
   # Diary dates ####
   all_days <- 1:9
   diary_dates <- unlist(sleep[1, grep("^diary_date", colnames(sleep))])
-  diary_dates <- as.character(as.Date(diary_dates, format = "%m/%d/%Y"))
+  diary_dates <- as.character(as.Date(diary_dates, tryFormats = c("%m/%d/%Y", "%Y-%m-%d")))
   na_dates <- !is.na(diary_dates) # this denotes whether a date is not missing
   diary_dates <- diary_dates[na_dates]
 
@@ -601,7 +601,7 @@ windows_work <- function(sleep) {
   # Diary dates ####
   all_days <- 1:9
   diary_dates <- unlist(sleep[1, grep("^diary_date", colnames(sleep))])
-  diary_dates <- as.character(as.Date(diary_dates, format = "%m/%d/%Y"))
+  diary_dates <- as.character(as.Date(diary_dates, tryFormats = c("%m/%d/%Y", "%Y-%m-%d")))
   na_dates <- !is.na(diary_dates) # this denotes whether a date is not missing
   diary_dates <- diary_dates[na_dates]
 
@@ -717,7 +717,7 @@ windows_monitor <- function(sleep) {
   # Diary dates ####
   all_days <- 1:9
   diary_dates <- unlist(sleep[1, grep("^diary_date", colnames(sleep))])
-  diary_dates <- as.character(as.Date(diary_dates, format = "%m/%d/%Y"))
+  diary_dates <- as.character(as.Date(diary_dates, tryFormats = c("%m/%d/%Y", "%Y-%m-%d")))
   na_dates <- !is.na(diary_dates) # this denotes whether a date is not missing
   diary_dates <- diary_dates[na_dates]
 
