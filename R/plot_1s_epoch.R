@@ -97,7 +97,7 @@ plot_1s_epoch <- function(data, sleep_times = NULL, plot = FALSE) {
     dplyr::mutate(time_of_day = group_column - min(group_column) + 1)
 
   # Creating plot object ####
-  cols <- c("sky blue", "coral", "forest green")
+  cols <- c("#87CEEB", "#FF7F50", "#228B22")
   g <- ggplot2::ggplot() +
     ggplot2::geom_line(
       data = tidyr::drop_na(graph_data),
@@ -118,12 +118,13 @@ plot_1s_epoch <- function(data, sleep_times = NULL, plot = FALSE) {
       ggplot2::aes(
         xmin = sleep_start,
         xmax = sleep_stop,
-        ymin = -Inf,
-        ymax = Inf,
+        ymin = 0,
+        ymax = 300,
         fill = label
       ),
       alpha = .2
-    )
+    ) +
+    ggplot2::scale_fill_manual(values = c("sleep" = "#87CEEB","nap" = "#FF7F50"))
   }
 
   # Plotting and returning plot object ####
