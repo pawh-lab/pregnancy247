@@ -22,5 +22,4 @@ including steps, sedentary behavior, light physical activity (LPA), moderate-to-
 \examples{
 # Example usage
 daily_summary <- dailysum(data)
-weekly_summary <- weeklysum(data)
 }
