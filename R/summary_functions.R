@@ -107,7 +107,7 @@ dailysum <- function(data){
   )
   return(daily)
 }
-
+#' @export
 weeklysum <- function(data){
   xsub <- subset(data, wearday %in% 2:8 & valid_day == 1) ## exclude day 1 from the data
   record_id <- data$subject[1]
