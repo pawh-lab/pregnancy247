@@ -55,7 +55,7 @@
 #'
 #' }
 #'
-#' @export process_data_1sec
+#' @export
 process_data_1sec <- function(subject, trimester, plotsave = TRUE, 
                               day1 = TRUE, day2 = TRUE, day3 = TRUE,
                               day4 = TRUE, day5 = TRUE, day6 = TRUE,
@@ -318,4 +318,99 @@ process_data_1sec <- function(subject, trimester, plotsave = TRUE,
   data.table::fwrite(sec_by_sec, 
                      file = paste0(sec_dir, "/", subject_id, "_1sec.csv"), 
                      row.names = FALSE)
+}
+#' Process summary Data (Daily)
+#'
+#' This function processes daily data for a given subject and visit, summarizing the data and updating the summary CSV file.
+#'
+#' @param subject Character string representing the subject ID.
+#' @param visit Character string representing the visit ID.
+#' @param dir Character string representing the directory where the raw data files are located.
+#' @param save Character string representing the directory where the processed data should be saved.
+#' @return None. The function updates the weekly summary CSV file with the processed data.
+#' @examples
+#' process_daily(subject = "1001-AA", visit = 1)
+#' @export
+process_daily <- function(subject, visit){
+
+  subject_id <- paste0(subject, visit)
+  # Select the directory of one-sec file
+  sec_dir <- if(exists("choose.dir")){
+    choose.dir(caption = "Choose the directory of one-second epoch file")
+  } else {
+    tcltk::tk_choose.dir(caption = "Choose the directory of one-second epoch file")
+  }
+  # Load the file path of the target participant
+  file <- list.files(sec_dir)[grepl(pattern = paste0(subject_id, "_1sec"), list.files(sec_dir))]
+  # Read the data
+  dat <- data.table::fread(paste0(sec_dir, "/", file))
+  
+  dat$subject <- subject
+  dat$trimester <- visit
+  # 
+  dat$sleep_loop <- ifelse(dat$sleep_loop == 99, NA, dat$sleep_loop)
+  dat$nap_loop <- ifelse(dat$nap_loop == 99, NA, dat$nap_loop)
+  dat$wake_loop <- ifelse(dat$wake_loop == 99, NA, dat$wake_loop)
+  dat$work_loop <- ifelse(dat$work_loop == 99, NA, dat$work_loop)
+  
+  a <- unique(dat$wear_day)
+  temp_wear <- list()
+  
+  for(i in seq_along(a)){
+    x <- subset(dat, wear_day == a[i])
+    temp_wear[[i]] <- dailysum(x)
+  }
+  
+  daily <- do.call(rbind, temp_wear)
+  
+  # Select the directory of daily summary will be saved.
+  daily_dir <- if(exists("choose.dir")){
+    choose.dir(caption = "Choose the directory to save daily summary")
+  } else {
+    tcltk::tk_choose.dir(caption = "Choose the directory to save daily summary")
+  }
+  
+  data.table::fwrite(daily, file = paste0(daily_dir, "/", subject_id, "_daily_wear_avg.csv"), row.names = FALSE)
+}
+
+#' Process Weekly Physical Activity and Sleep Data
+#' 
+#' This function processes weekly physical activity and sleep data for a given subject and visit.
+#' @param subject A character string representing the subject identifier.
+#' @param visit A character string representing the visit identifier.
+#' @return This function does not explicitly return a value but overwrites the selected weekly summary file.
+#'
+#' @examples
+#' Example usage (interactive - requires user input for directory and file selection)
+#' process_weekly(subject = "1001-AA", visit = 1)
+#' 
+#' @export
+process_weekly <- function(subject, visit, dir, save){
+subject_id <- paste0(subject, visit)
+daily_dir <- if(exists("choose.dir")){
+  choose.dir(caption = "Choose the directory of daily summary file")
+} else {
+  tcltk::tk_choose.dir(caption = "Choose the directory of daily summary file")
+}
+file <- list.files(daily_dir)[grepl(pattern = subject_id, list.files(daily_dir))]
+dat <- data.table::fread(paste0(daily_dir, "/", file))
+
+weekly <- weeklysum(dat)
+
+# Reading the weekly summary file.
+weekly_file <- choose.files(caption = "Select weekly summary file")
+temp <- data.table::fread(weekly_file)
+# Checking whether weekly summary files are following the same data frame.
+if(length(colnames(temp)) != length(colnames(weekly))){
+  print("The number of variables are not matched with current weekly summary file")
+  while(length(colnames(temp)) != length(colnames(weekly))){
+    weekly_file <- choose.files(caption = "Select weekly summary file")
+    temp <- data.table::fread(weekly_file)
+  }
+}
+temp <- subset(temp, paste0(record_id, trimester) != subject_id)
+temp <- data.table::rbindlist(list(temp, weekly), use.names = TRUE, fill = TRUE)
+data.table::setorder(temp, record_id, trimester)
+# Overwrite the weekly summary
+data.table::fwrite(temp, file = weekly_file, row.names = FALSE)
 }

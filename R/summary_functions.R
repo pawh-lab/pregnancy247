@@ -201,3 +201,96 @@ weeklysum <- function(data){
   )
   return(weekly)
 }
+
+#' Identify Bouts of Physical Activity Behaviors
+#'
+#' This function identifies bouts of physical activity behaviors based on metabolic equivalent tasks (METs) data. 
+#' It accounts for periods of wear time and applies thresholds to determine valid bouts. 
+#' This is also a simpler R version of bout function from accelerometry package.
+#' 
+#' @param mets Numeric vector of METs data.
+#' @param wake Optional numeric vector indicating wear time (1 for wear, 0 for non-wear). If NULL, all data is considered valid wear time.
+#' @param bout_length Numeric value indicating the minimum length of a bout in minutes. Default is 10 minutes.
+#' @param thresh_lower Numeric value indicating the lower threshold for valid METs. Default is 1.25.
+#' @param thresh_upper Numeric value indicating the upper threshold for valid METs. Default is 6.
+#' @param tol Numeric value indicating the tolerance for non-valid METs within a bout. Default is 0.
+#' @param tol_lower Numeric value indicating the lower threshold for tolerance METs. Default is 1.25.
+#' @param tol_upper Numeric value indicating the upper threshold for tolerance METs. Default is 3.
+#' @param epoch Numeric value indicating the epoch length in minutes. Default is 1 minute.
+#' @return Integer vector indicating bouts of physical activity (1 for bout, 0 for non-bout).
+#' @examples
+#' mets <- c(1.5, 2.0, 1.0, 5.0, 6.0, 1.0, 2.5, 3.0, 1.0, 1.5)
+#' wake <- c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+#' bouts(mets, wake, bout_length = 10, thresh_lower = 1.25, thresh_upper = 6, tol = 0, epoch = 1)
+#' @export
+bouts <- function(mets, wake = NULL, bout_length = 10, thresh_lower = 1.25, thresh_upper = 6, 
+                  tol = 0, tol_lower = 1.25, tol_upper = 3, epoch = 1){
+  n <- length(mets)
+  if(n <= 600){return(0)}
+  else{
+    bout_length <- bout_length * (60/epoch)
+    tol <- tol * (60/epoch)
+    out <- integer(n)  # Initialize output vector with zeros
+    
+    if (is.null(wake)) {
+      wear <- rep(1, n)
+    } else {
+      wear <- wake
+    }
+    
+    valid_mets <- (wear == 1) & (mets >= thresh_lower) & (mets <= thresh_upper)
+    
+    if (tol == 0) {
+      counter <- 0
+      for (i in seq_len(n)) {
+        if (valid_mets[i] & !is.na(valid_mets[i])) {
+          counter <- counter + 1
+        } else {
+          if (counter >= bout_length) {
+            out[(i - counter):(i - 1)] <- 1
+          }
+          counter <- 0
+        }
+        if (i == n && counter >= bout_length) {
+          out[(i - counter + 1):i] <- 1
+        }
+      }
+    } else if (tol > 0) {
+      for (i in 1:(n - bout_length + 1)) {
+        if (!valid_mets[i] & !is.na(valid_mets[i])) next
+        tolcount <- 0
+        tolcount2 <- 0
+        last <- 0
+        for (j in i:(i + bout_length - 1)) {
+          if (valid_mets[j]& !is.na(valid_mets[j])) {
+            tolcount2 <- 0
+            last <- j
+          } else {
+            tolcount <- tolcount + 1
+            tolcount2 <- tolcount2 + 1
+          }
+          if (tolcount == tol + 1) break
+        }
+        if (tolcount < tol + 1) {
+          if (i + bout_length == n) {
+            out[i:last] <- 1
+            break
+          }
+          for (k in (i + bout_length):n) {
+            if (valid_mets[k] & !is.na(valid_mets[k])){
+              tolcount2 <- 0
+              last <- k
+            } else {
+              tolcount2 <- tolcount2 + 1
+            }
+            if (tolcount2 == tol + 1 || k == n) {
+              out[i:last] <- 1
+              break
+            }
+          }
+        }
+      }
+    }
+  }  
+  return(out)
+}
