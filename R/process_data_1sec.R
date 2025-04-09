@@ -55,7 +55,7 @@
 #'
 #' }
 #'
-#' @export process_data
+#' @export process_data_1sec
 process_data_1sec <- function(subject, trimester, plotsave = TRUE, 
                               day1 = TRUE, day2 = TRUE, day3 = TRUE,
                               day4 = TRUE, day5 = TRUE, day6 = TRUE,
