@@ -10,7 +10,6 @@
 #' @examples
 #' # Example usage
 #' daily_summary <- dailysum(data)
-#' weekly_summary <- weeklysum(data)
 #' @export
 dailysum <- function(data){
   # Participants characteristics
@@ -107,8 +106,16 @@ dailysum <- function(data){
   )
   return(daily)
 }
+
+#' Summarize Weekly Physical Activity and Sleep Data
+#'
+#' This function summarizes weekly physical activity and sleep metrics,
+#' including steps, sedentary behavior, light physical activity (LPA), moderate-to-vigorous physical activity (MVPA), and sleep metrics.
 #' @param data A data frame that processed via daily processing function.
 #' @return A data frame summarizing weekly physical activity and sleep metrics for the given subject and visit.
+#' @examples
+#' # Example usage
+#' weekly_summary <- weeklysum(data)
 #' @export
 weeklysum <- function(data){
   xsub <- subset(data, wearday %in% 2:8 & valid_day == 1) ## exclude day 1 from the data
