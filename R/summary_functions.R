@@ -107,6 +107,8 @@ dailysum <- function(data){
   )
   return(daily)
 }
+#' @param data A data frame that processed via daily processing function.
+#' @return A data frame summarizing weekly physical activity and sleep metrics for the given subject and visit.
 #' @export
 weeklysum <- function(data){
   xsub <- subset(data, wearday %in% 2:8 & valid_day == 1) ## exclude day 1 from the data
