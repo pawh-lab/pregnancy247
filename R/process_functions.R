@@ -96,13 +96,13 @@ process_data_1sec <- function(subject, visit, plotsave = TRUE,
   )
   
   ## activPAL (events file) data
-  print("Choose activPAL eventEx file")
+  print("Choose activPAL eventEx file: ", paste0(subject, trimester))
   PAL_source <- choose.files(caption = "Choose activPAL eventEx file") # input eventEx file source
   
     # Check eventEx file algorithm
     if(isFALSE(grepl(pattern = "VANE", PAL_source))){
       while(!grepl(pattern = "VANE", PAL_source)){
-        print("Please choose eventEx file processed using VANE algorithm")
+        print(paste0("Please choose eventEx file processed using VANE algorithm")
         PAL_source <- choose.files(caption = "Choose activPAL eventEX file")
       }
     }
@@ -268,12 +268,12 @@ process_data_1sec <- function(subject, visit, plotsave = TRUE,
     start_time = start_time, end_time = end_time,
     off_times = wind_monitor, good_days = good_days
   )
-  
+  print("The eventEx file has been merged with the REDCap sleep data.")
   # Creating 1 second epoch data set ####
   sec_by_sec <- create_1s_epoch(
     data = merge_dat, good_days = good_days, remove_days = TRUE
   )
-  
+  print("The one-second epoch file has been generated.")
   # Graph ####
   sleep_times <- data.frame(
     sleep_start = c(
@@ -301,16 +301,18 @@ process_data_1sec <- function(subject, visit, plotsave = TRUE,
     g <- plot_1s_epoch(data = sec_by_sec, sleep_times = sleep_times)
     # Save graph pdf
     if(plotsave){
+      print("Select the graph saving directory.")
       plot_dir <- if(exists("choose.dir")){
                     choose.dir(caption = "Choose the directory to save the plot")
                   } else {
                     tcltk::tk_choose.dir(caption = "Choose the directory to save the plot")
                   }
-      file_name <- paste0(plot_dir, "/", subject_id, "graph.pdf")
+      file_name <- paste0(plot_dir, "/", subject_id, "_graph.pdf")
       save_plot_1s_epoch(x = g, subject = subject, trimester, file = file_name, width = 11, height = 8.5)
     }
   
   # Save one-sec epoch file ####
+  print("Select the 1-sec epoch file saving directory.")
   sec_dir <- if(exists("choose.dir")){
                choose.dir(caption = "Choose the directory to save the 1-sec epoch file")
              } else {
@@ -319,6 +321,7 @@ process_data_1sec <- function(subject, visit, plotsave = TRUE,
   data.table::fwrite(sec_by_sec, 
                      file = paste0(sec_dir, "/", subject_id, "_1sec.csv"), 
                      row.names = FALSE)
+  print("ActivPAL & Sleep data processing has been completed")
 }
 #' Process summary Data (Daily)
 #'
@@ -402,7 +405,7 @@ process_weekly <- function(subject, visit, overwrite = TRUE){
   if(overwrite){
     weekly_file <- choose.files(caption = "Select weekly summary file")
     temp <- data.table::fread(weekly_file)
-    # Checking whether weekly summary files are following the same data frame.
+    # Check whether weekly summary files follow the same data frame.
     if(length(colnames(temp)) != length(colnames(weekly))){
       print("The number of variables are not matched with current weekly summary file")
       while(length(colnames(temp)) != length(colnames(weekly))){
