@@ -102,7 +102,7 @@ process_data_1sec <- function(subject, visit, plotsave = TRUE,
     # Check eventEx file algorithm
     if(isFALSE(grepl(pattern = "VANE", PAL_source))){
       while(!grepl(pattern = "VANE", PAL_source)){
-        print(paste0("Please choose eventEx file processed using VANE algorithm")
+        print(paste0("Please choose eventEx file processed using VANE algorithm"))
         PAL_source <- choose.files(caption = "Choose activPAL eventEX file")
       }
     }
