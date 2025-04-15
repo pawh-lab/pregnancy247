@@ -48,9 +48,18 @@ process_events <- function(data) {
     stop("data must be a data.events object imported by read_events")
   }
 
-  # Select useable variables & rename it ####
-  dat <- data[, c("Time", "Data.Count", "Duration..s.", "Event.Type", "Cumulative.Step.Count", "Activity.Score..MET.h.")]
-  names(dat) <- c("time", "datacount", "interval", "activity", "cumulativesteps", "methrs")
+# Arrange variables ####
+dat <- dplyr::bind_cols(
+  data[, c(1, 3, 5, 4, 7, 8, 9, 10, 11)],
+  data[, c(2, 6, 12, 13, 14, 15, 16, 17)]
+)
+
+# Select useable variables ####
+dat <- dat[, 1:6]
+names(dat) <- c(
+  "time", "datacount", "interval",
+  "activity", "cumulativesteps", "methrs"
+)
 
   # Updating cumulative steps ####
   # Doubling the number of cumulative steps because the ActivPal is only placed
