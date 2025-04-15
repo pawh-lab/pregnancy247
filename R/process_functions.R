@@ -70,7 +70,7 @@ process_data_1sec <- function(subject, visit, plotsave = TRUE,
     stop("subject must be a character string denoting subject ID.")
   }
   trimester <- visit
-  if (nchar(trimester) != 1 || !(as.integer(trimester) %in% c(1, 2, 3))) {
+  if (nchar(trimester) != 1 || !(as.integer(trimester) %in% c(1, 2, 3, 4, 5, 6))) {
     stop("trimester must be either 1, 2, 3 denoting pregnancy trimester.")
   }
   
