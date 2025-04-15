@@ -96,7 +96,7 @@ process_data_1sec <- function(subject, visit, plotsave = TRUE,
   )
   
   ## activPAL (events file) data
-  print("Choose activPAL eventEx file: ", paste0(subject, trimester))
+  print(paste0("Choose activPAL eventEx file: ", subject, trimester))
   PAL_source <- choose.files(caption = "Choose activPAL eventEx file") # input eventEx file source
   
     # Check eventEx file algorithm
