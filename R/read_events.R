@@ -43,19 +43,32 @@
 #' @export read_events
 read_events <- function(subject, trimester, file = NULL, ...) {
 
-  if (is.null(file)) {
+  if (is.null(file)){
     subject_id <- paste0(subject, trimester)
     data_loc <- paste0(loc(subject), subject_id)
     files <- list.files(path = data_loc, pattern = "EventsEx.csv$")
-    dat <- utils::read.csv(
-      file = paste0(data_loc, "/", files),
-      skip = 2, header = FALSE, sep = ";", stringsAsFactors = FALSE, ...
-    )
+    if(grepl("CREA", files)){
+      dat <- utils::read.csv(file = paste0(data_loc, "/", files),
+                             sep = ";", skip = 1, header = TRUE, row.names = NULL, stringsAsFactors = FALSE, ...)
+    } else if(grepl("VANE", files)){
+      dat <- utils::read.csv(file = paste0(data_loc, "/", files),
+                             sep = ";", skip = 1, header = TRUE, row.names = NULL, stringsAsFactors = FALSE, ...)
+      ## Matching the variable names with columns
+      names(dat) <- names(dat)[-1] 
+      dat <- dat[, -length(dat)] 
+    } else{stop("VANE or CREA algorithms are eligible to process")}
   } else {
-    dat <- utils::read.csv(
-      file = file,
-      skip = 2, header = FALSE, sep = ";", stringsAsFactors = FALSE, ...
-    )
+    if(grepl("CREA", file)){
+      dat <- utils::read.csv(
+        file = file,
+        skip = 1, header = TRUE, sep = ";", stringsAsFactors = FALSE, ...)
+    } else if(grepl("VANE", file)){
+      dat <- utils::read.csv(file = file,
+                             sep = ";", skip = 1, header = TRUE, row.names = NULL, stringsAsFactors = FALSE, ...)
+      ## Matching the variable names with columns
+      names(dat) <- names(dat)[-1]
+      dat <- dat[, -length(dat)]
+    } else{stop("VANE or CREA algorithms are eligible to process")}
   }
 
   class(dat) <- c("data.events", "data.frame")
