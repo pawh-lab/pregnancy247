@@ -58,7 +58,7 @@ process_events <- function(data) {
   dat$cumulativesteps <- c(dat$cumulativesteps) * 2
 
   # Adjusting the way time is expressed ####
-  dat$time <- as.POSIXct(as.Date(dat$time, origin = "1899-12-30"))
+  dat$time <- as.POSIXct(as.Date(as.numeric(dat$time), origin = "1899-12-30"))
   dat$time <- lubridate::with_tz(dat$time, "UTC")
 
   # Adding empty loop variables ####
