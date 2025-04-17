@@ -82,12 +82,24 @@ process_data_1sec <- function(subject, visit, plotsave = TRUE,
   
   ## Actiwatch and sleep diary data
   print("Choose Sleep data file")
-  sleep_source <- choose.files(caption = "Choose Sleep Data file")
+  sleep_source <- if(tryCatch({tcltk::tk_choose.files
+                               TRUE
+                              }, error = function(e) FALSE)){
+                    tcltk::tk_choose.files(caption = "Choose Sleep Data file")
+                  } else {
+                    choose.files(caption = "Choose Sleep Data file")
+                  }
   
   if(isFALSE(grepl(pattern = "SleepD", sleep_source))){
     while(!grepl(pattern = "SleepD", sleep_source)){
       print("Please choose Sleep Data file")
-      sleep_source <- choose.files(caption = "Choose Sleep Data file")
+      sleep_source <- if(tryCatch({tcltk::tk_choose.files
+                               TRUE
+                              }, error = function(e) FALSE)){
+                    tcltk::tk_choose.files(caption = "Choose Sleep Data file")
+                  } else {
+                    choose.files(caption = "Choose Sleep Data file")
+                  }
     }
   }
   
@@ -97,20 +109,38 @@ process_data_1sec <- function(subject, visit, plotsave = TRUE,
   
   ## activPAL (events file) data
   print(paste0("Choose activPAL eventEx file: ", subject, trimester))
-  PAL_source <- choose.files(caption = "Choose activPAL eventEx file") # input eventEx file source
+  PAL_source <- if(tryCatch({tcltk::tk_choose.files
+                               TRUE
+                              }, error = function(e) FALSE)){
+                    tcltk::tk_choose.files(caption = "Choose activPAL eventEx file")
+                  } else {
+                    choose.files(caption = "Choose activPAL eventEx file")
+                  } # input eventEx file source
   
     # Check eventEx file algorithm
     if(isFALSE(grepl(pattern = "VANE", PAL_source))){
       while(!grepl(pattern = "VANE", PAL_source)){
         print(paste0("Please choose eventEx file processed using VANE algorithm"))
-        PAL_source <- choose.files(caption = "Choose activPAL eventEX file")
+        PAL_source <- if(tryCatch({tcltk::tk_choose.files
+                               TRUE
+                              }, error = function(e) FALSE)){
+                    tcltk::tk_choose.files(caption = "Choose activPAL eventEx file")
+                  } else {
+                    choose.files(caption = "Choose activPAL eventEx file")
+                  }
       }
     }
   
     if(isFALSE(grepl(pattern = paste0(subject, trimester), PAL_source))){
       while(!grepl(pattern = paste0(subject, trimester), PAL_source)){
         print("Please choose the eventEx file corresponding to the selected subject and trimester")
-        PAL_source <- choose.files(caption = "Choose activPAL eventEX file")
+        PAL_source <- if(tryCatch({tcltk::tk_choose.files
+                               TRUE
+                              }, error = function(e) FALSE)){
+                    tcltk::tk_choose.files(caption = "Choose activPAL eventEx file")
+                  } else {
+                    choose.files(caption = "Choose activPAL eventEx file")
+                  }
       }
     }
   
@@ -302,22 +332,26 @@ process_data_1sec <- function(subject, visit, plotsave = TRUE,
     # Save graph pdf
     if(plotsave){
       print("Select the graph saving directory.")
-      plot_dir <- if(exists("choose.dir")){
-                    choose.dir(caption = "Choose the directory to save the plot")
-                  } else {
-                    tcltk::tk_choose.dir(caption = "Choose the directory to save the plot")
-                  }
+      plot_dir <- if(tryCatch({tcltk::tk_choose.dir
+                               TRUE
+                              }, error = function(e) FALSE)){
+                      tcltk::tk_choose.dir(caption = "Choose the directory to save the plot")
+                    } else {
+                      choose.dir(caption = "Choose the directory to save the plot")
+                    }
       file_name <- paste0(plot_dir, "/", subject_id, "_graph.pdf")
       save_plot_1s_epoch(x = g, subject = subject, trimester, file = file_name, width = 11, height = 8.5)
     }
   
   # Save one-sec epoch file ####
   print("Select the 1-sec epoch file saving directory.")
-  sec_dir <- if(exists("choose.dir")){
-               choose.dir(caption = "Choose the directory to save the 1-sec epoch file")
-             } else {
-                tcltk::tk_choose.dir(caption = "Choose the directory to save the 1-sec epoch file")
-             }
+  sec_dir <- if(tryCatch({tcltk::tk_choose.dir
+                               TRUE
+                              }, error = function(e) FALSE)){
+                      tcltk::tk_choose.dir(caption = "Choose the directory to save the 1-sec epoch file")
+                    } else {
+                      choose.dir(caption = "Choose the directory to save the 1-sec epoch file")
+                    }
   data.table::fwrite(sec_by_sec, 
                      file = paste0(sec_dir, "/", subject_id, "_1sec.csv"), 
                      row.names = FALSE)
