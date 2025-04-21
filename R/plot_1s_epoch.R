@@ -122,7 +122,7 @@ plot_1s_epoch <- function(data, sleep_times = NULL, plot = FALSE) {
         ymax = 300,
         fill = label
       ),
-      alpha = .2
+      alpha = .4
     ) +
     ggplot2::scale_fill_manual(values = c("sleep" = "#87CEEB","nap" = "#FF7F50"))
   }
