@@ -53,6 +53,10 @@ read_events <- function(subject, trimester, file = NULL, ...) {
     } else if(grepl("VANE", files)){
       dat <- utils::read.csv(file = paste0(data_loc, "/", files),
                              sep = ";", skip = 1, header = TRUE, row.names = NULL, stringsAsFactors = FALSE, ...)
+        if(length(dat) == 2){
+          dat <- utils::read.csv(file = paste0(data_loc, "/", files),
+                             sep = ";", skip = 14, header = TRUE, row.names = NULL, stringsAsFactors = FALSE, ...)
+          }
       ## Matching the variable names with columns
       names(dat) <- names(dat)[-1] 
       dat <- dat[, -length(dat)] 
@@ -65,6 +69,10 @@ read_events <- function(subject, trimester, file = NULL, ...) {
     } else if(grepl("VANE", file)){
       dat <- utils::read.csv(file = file,
                              sep = ";", skip = 1, header = TRUE, row.names = NULL, stringsAsFactors = FALSE, ...)
+      if(length(dat) == 2){
+          dat <- utils::read.csv(file = paste0(data_loc, "/", files),
+                             sep = ";", skip = 14, header = TRUE, row.names = NULL, stringsAsFactors = FALSE, ...)
+          }
       ## Matching the variable names with columns
       names(dat) <- names(dat)[-1]
       dat <- dat[, -length(dat)]
