@@ -70,7 +70,7 @@ read_events <- function(subject, trimester, file = NULL, ...) {
       dat <- utils::read.csv(file = file,
                              sep = ";", skip = 1, header = TRUE, row.names = NULL, stringsAsFactors = FALSE, ...)
       if(length(dat) == 2){
-          dat <- utils::read.csv(file = paste0(data_loc, "/", files),
+          dat <- utils::read.csv(file = file,
                              sep = ";", skip = 14, header = TRUE, row.names = NULL, stringsAsFactors = FALSE, ...)
           }
       ## Matching the variable names with columns
