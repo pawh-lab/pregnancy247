@@ -254,14 +254,15 @@ merge_events <- function(
   dat$methrs[t] <- 1.25/3600
 
   ### Cumulative steps ####
-  for (j in seq_along(dat$cumulativesteps)) {
-    # Handling NA issues of the first row
-    if (is.na(dat$cumulativesteps[1])) dat$cumulativesteps[1] <- dat$cumulativesteps[2]
+  if(is.na(dat$cumulativesteps[1])){
+    dat$cumulativesteps[1] <- dat$cumulativesteps[2]
+  }
+  
+  for(j in 2:(nrow(dat) - 1)){
+    if(is.na(dat$cumulativesteps[j]) && is.na(dat$cumulativesteps[j+1])) next
     
-    if (is.na(dat$cumulativesteps[j]) && (dat$wear_day[j] %in% good_days)) {
-      dat$cumulativesteps[j] <- dat$cumulativesteps[j - 1]
-    } else {
-      dat$cumulativesteps[j] <- dat$cumulativesteps[j]
+    if(is.na(dat$cumulativesteps[j]) && (dat$wear_day[j] %in% good_days)){
+      dat$cumulativesteps[j] <- dat$cumulativesteps[j-1]
     }
   }
 
