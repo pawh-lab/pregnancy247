@@ -208,11 +208,13 @@ process_data_1sec <- function(subject, visit, plotsave = TRUE,
   
   #### Work ####
   wind_work <- windows_work(sleep = sleep)
+  wind_work <- overlapfix(sleepwindow = wind_sleep, interwindow = wind_work)                                
   work_start <- wind_work$start
   work_end <- wind_work$end
   
   #### Monitor off ####
   wind_monitor <- windows_monitor(sleep = sleep)
+  wind_monitor <- overlapfix(sleepwindow = wind_sleep, interwindow = wind_monitor)
   monitor_off <- wind_monitor$start
   monitor_on <- wind_monitor$end
   
