@@ -3,7 +3,7 @@ bibentry(
   title    = "pregnancy247: Data processing for the Pregnancy 24/7 study",
   author   = c(person(c("Erik", "D."), "Boonstra"),
                person("Jacob", "Gallagher"),
-               person("Jaemyung", "Kim))
+               person("Jaemyung", "Kim)),
   year     = "2023",
   note     = "R package version 0.0.0.9",
   url      = "https://pawh-lab.github.io/pregnancy247/"
