@@ -119,7 +119,7 @@ dailysum <- function(data, record_id = "Example", trimester = 1){
 #' @export
 weeklysum <- function(data){
   xsub <- subset(data, wearday %in% 2:8 & valid_day == 1) ## exclude day 1 from the data
-  record_id <- data$subject[1]
+  record_id <- data$record_id[1]
   validdays <- sum(xsub$valid_day)
   trimester <- data$trimester[1]
   weekday <- sum(xsub$weekday == 1)
@@ -295,3 +295,4 @@ bouts <- function(mets, wake = NULL, bout_length = 10, thresh_lower = 1.25, thre
   return(out)
 
 }
+
