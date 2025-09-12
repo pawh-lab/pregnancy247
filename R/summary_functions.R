@@ -11,10 +11,10 @@
 #' # Example usage
 #' daily_summary <- dailysum(data)
 #' @export
-dailysum <- function(data){
+dailysum <- function(data, record_id = "Example", trimester = 1){
   # Participants characteristics
-  subject <- data$subject[1]
-  trimester <- data$trimester[1]
+  record_id <- record_id
+  trimester <- trimester
   wearday <- data$wear_day[1]
   date <- names(which.max(table(data$date)))
   day <- weekdays(as.Date(names(which.max(table(data$date)))))
@@ -93,7 +93,7 @@ dailysum <- function(data){
   mvpa.10bout.num60 <- sum(rle(mvpa.10bout60)$values)
   
   # Create summary data
-  daily <- data.frame(subject, trimester, wearday, date, day, weekday, valid_day, daytime,
+  daily <- data.frame(record_id, trimester, wearday, date, day, weekday, valid_day, daytime,
                      weartime = (sleep + sed + nap + lpa1 + mvpa1) , wakeware = (sed + lpa1 + mvpa1), nonwear, 
                      steps, stepping_min, 
                      sleep, nap, sed, stand, upright = (stand + stepping_min),
@@ -293,4 +293,5 @@ bouts <- function(mets, wake = NULL, bout_length = 10, thresh_lower = 1.25, thre
     }
   }  
   return(out)
+
 }
