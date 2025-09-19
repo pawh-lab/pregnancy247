@@ -23,7 +23,7 @@ dailysum <- function(data, record_id = "Example", trimester = 1){
   nonwear <- sum(is.na(data$sleep_loop) | is.na(data$nap_loop) & data$activity == 0) / 60
   
   # Steps
-  range <- function(data){max(data, na.rm = T) - min(data, na.rm = T)}
+  range <- function(data){max(data) - min(data)}
   if(sum(data$sleep_loop, na.rm = TRUE) == 0){
     steps_sleep <- 0
   }else{
@@ -295,5 +295,6 @@ bouts <- function(mets, wake = NULL, bout_length = 10, thresh_lower = 1.25, thre
   return(out)
 
 }
+
 
 
